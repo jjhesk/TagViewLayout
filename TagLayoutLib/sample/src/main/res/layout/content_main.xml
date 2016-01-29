@@ -69,6 +69,7 @@
                 app:tag_theme="random"
                 app:vertical_interval="10dp" />
 
+
             <co.lujun.androidtagview.TagContainerLayout
                 android:id="@+id/tagcontainerLayout3"
                 android:layout_width="match_parent"
@@ -105,6 +106,30 @@
                 app:horizontal_interval="10dp"
                 app:tag_clickable="true"
                 app:tag_theme="pure_teal"
+                app:vertical_interval="10dp" />
+
+
+            <co.lujun.androidtagview.TagContainerLayout
+                android:id="@+id/tagcontainerLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                app:container_background_color="#00000000"
+                app:container_border_color="#33666666"
+                app:container_border_radius="0dp"
+                app:container_gravity="left"
+                app:horizontal_interval="10dp"
+                app:tag_background_color="#00000000"
+                app:tag_border_color="#330000ff"
+                app:tag_border_width="1dp"
+                app:tag_clickable="true"
+                app:tag_corner_radius="1dp"
+                app:tag_horizontal_padding="15dp"
+                app:tag_max_length="18"
+                app:tag_text_direction="rtl"
+                app:tag_text_size="14sp"
+                app:tag_vertical_padding="10dp"
                 app:vertical_interval="10dp" />
 
         </LinearLayout>

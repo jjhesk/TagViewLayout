@@ -1,6 +1,10 @@
 package co.lujun.androidtagview;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.StyleRes;
 
 /**
  * Author: lujun(http://blog.lujun.co)
@@ -9,9 +13,9 @@ import android.graphics.Color;
 public class ColorFactory {
 
     /**
-     *                       ============= -->border color
-     *  background color<---||-  Text --||-->text color
-     *                      =============
+     * ============= -->border color
+     * background color<---||-  Text --||-->text color
+     * =============
      */
 
     public static final String BG_COLOR_ALPHA = "33";
@@ -31,7 +35,7 @@ public class ColorFactory {
     public static final String TEAL = "009688";
     public static final String CYAN = "00BCD4";
 
-    public enum PURE_COLOR{CYAN, TEAL}
+    public enum PURE_COLOR {CYAN, TEAL}
 
     public static final int NONE = -1;
     public static final int RANDOM = 0;
@@ -44,15 +48,15 @@ public class ColorFactory {
     private static final String[] COLORS = new String[]{RED, LIGHTBLUE, AMBER, ORANGE, YELLOW,
             LIME, BLUE, INDIGO, LIGHTGREEN, GREY, DEEPPURPLE, TEAL, CYAN};
 
-    public static int[] onRandomBuild(){
-        int random = (int)(Math.random() * COLORS.length);
+    public static int[] onRandomBuild() {
+        int random = (int) (Math.random() * COLORS.length);
         int bgColor = Color.parseColor("#" + BG_COLOR_ALPHA + COLORS[random]);
         int bdColor = Color.parseColor("#" + BD_COLOR_ALPHA + COLORS[random]);
         int tColor = SHARP666666;
         return new int[]{bgColor, bdColor, tColor};
     }
 
-    public static int[] onPureBuild(PURE_COLOR type){
+    public static int[] onPureBuild(PURE_COLOR type) {
         String color = type == PURE_COLOR.CYAN ? CYAN : TEAL;
         int bgColor = Color.parseColor("#" + BG_COLOR_ALPHA + color);
         int bdColor = Color.parseColor("#" + BD_COLOR_ALPHA + color);
@@ -60,4 +64,49 @@ public class ColorFactory {
         return new int[]{bgColor, bdColor, tColor};
     }
 
+
+    public ColorFactory() {
+
+    }
+
+
+    private int[] theme_style_config;
+    boolean usingStyle = false;
+
+    public ColorFactory(@StyleRes int theme, Context context) {
+        int[] attrs = {
+                R.attr.ptc_tag_border_color,
+                R.attr.ptc_tag_background_color,
+                R.attr.ptc_tag_text_color
+        };
+
+// Parse MyCustomStyle, using Context.obtainStyledAttributes()
+        TypedArray ta = context.obtainStyledAttributes(theme, attrs);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            usingStyle = ta.hasValue(0);
+        }
+
+
+        ta.getResourceId(1, Color.BLUE);
+
+        //    TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MyView, defStyle, 0);
+        int base = ta.getResourceId(1, R.drawable.tag_fc_blue);
+
+        theme_style_config = new int[]{
+                ta.getColor(0, Color.BLUE),
+                ta.getColor(1, Color.BLUE),
+                ta.getColor(2, Color.BLACK)
+        };
+
+        ta.recycle();
+
+    }
+
+    public boolean isUsingStylable() {
+        return usingStyle;
+    }
+
+    public int[] getConfig() {
+        return theme_style_config;
+    }
 }

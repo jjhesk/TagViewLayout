@@ -10,58 +10,92 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
+import co.lujun.androidtagview.ext.LayouMode;
+
 /**
  * Author: lujun(http://blog.lujun.co)
  * Date: 2015-12-31 11:47
  */
 public class TagView extends View {
 
-    /** Border width*/
+    /**
+     * Border width
+     */
     private float mBorderWidth;
 
-    /** Border radius*/
+    /**
+     * Border radius
+     */
     private float mBorderRadius;
 
-    /** Text size*/
+    /**
+     * Text size
+     */
     private float mTextSize;
 
-    /** Horizontal padding for this view, include left & right padding(left & right padding are equal*/
+    /**
+     * Horizontal padding for this view, include left & right padding(left & right padding are equal
+     */
     private int mHorizontalPadding;
 
-    /** Vertical padding for this view, include top & bottom padding(top & bottom padding are equal)*/
+    /**
+     * Vertical padding for this view, include top & bottom padding(top & bottom padding are equal)
+     */
     private int mVerticalPadding;
 
-    /** TagView border color*/
+    /**
+     * TagView border color
+     */
     private int mBorderColor;
 
-    /** TagView background color*/
+    /**
+     * TagView background color
+     */
     private int mBackgroundColor;
 
-    /** TagView text color*/
+    /**
+     * TagView text color
+     */
     private int mTextColor;
 
-    /** Whether this view clickable*/
+    /**
+     * Whether this view clickable
+     */
     private boolean isViewClickable;
 
-    /** The max length for this tag view*/
+    /**
+     * The max length for this tag view
+     */
     private int mTagMaxLength;
 
-    /** OnTagClickListener for click action*/
+    /**
+     * OnTagClickListener for click action
+     */
     private OnTagClickListener mOnTagClickListener;
 
-    /** Move slop(default 20px)*/
+    /**
+     * Move slop(default 20px)
+     */
     private int mMoveSlop = 20;
 
-    /** Scroll slop threshold*/
+    /**
+     * Scroll slop threshold
+     */
     private int mSlopThreshold = 4;
 
-    /** How long trigger long click callback(default 500ms)*/
+    /**
+     * How long trigger long click callback(default 500ms)
+     */
     private int mLongPressTime = 500;
 
-    /** Text direction(support:TEXT_DIRECTION_RTL & TEXT_DIRECTION_LTR, default TEXT_DIRECTION_LTR)*/
+    /**
+     * Text direction(support:TEXT_DIRECTION_RTL & TEXT_DIRECTION_LTR, default TEXT_DIRECTION_LTR)
+     */
     private int mTextDirection = View.TEXT_DIRECTION_LTR;
 
-    /** The distance between baseline and descent*/
+    /**
+     * The distance between baseline and descent
+     */
     private float bdDistance;
 
     private Paint mPaint;
@@ -78,12 +112,15 @@ public class TagView extends View {
 
     private Typeface mTypeface;
 
+    private LayouMode mMode;
+    private TagContainerLayout mNofication;
+
     private Runnable mLongClickHandle = new Runnable() {
         @Override
         public void run() {
-            if (!isMoved && !isUp){
-                int state = ((TagContainerLayout)getParent()).getTagViewState();
-                if (state == ViewDragHelper.STATE_IDLE){
+            if (!isMoved && !isUp) {
+                int state = ((TagContainerLayout) getParent()).getTagViewState();
+                if (state == ViewDragHelper.STATE_IDLE) {
                     isExecLongClick = true;
                     mOnTagClickListener.onTagLongClick((int) getTag(), getText());
                 }
@@ -91,35 +128,39 @@ public class TagView extends View {
         }
     };
 
-    public TagView(Context context, String text){
+    public TagView(Context context, String text) {
         super(context);
         init(text);
     }
 
-    private void init(String text){
+    private void init(String text) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRectF = new RectF();
         mOriginText = text == null ? "" : text;
     }
 
-    private void onDealText(){
-        if(!TextUtils.isEmpty(mOriginText)) {
+    public void setNotification(TagContainerLayout ly) {
+        mNofication = ly;
+    }
+
+    private void onDealText() {
+        if (!TextUtils.isEmpty(mOriginText)) {
             mAbstractText = mOriginText.length() <= mTagMaxLength ? mOriginText
                     : mOriginText.substring(0, mTagMaxLength - 3) + "...";
-        }else {
+        } else {
             mAbstractText = "";
         }
         mPaint.setTypeface(mTypeface);
         mPaint.setTextSize(mTextSize);
         final Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
         fontH = fontMetrics.descent - fontMetrics.ascent;
-        if (mTextDirection == View.TEXT_DIRECTION_RTL){
+        if (mTextDirection == View.TEXT_DIRECTION_RTL) {
             fontW = 0;
             for (char c : mAbstractText.toCharArray()) {
                 String sc = String.valueOf(c);
                 fontW += mPaint.measureText(sc);
             }
-        }else {
+        } else {
             fontW = mPaint.measureText(mAbstractText);
         }
     }
@@ -151,14 +192,14 @@ public class TagView extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mTextColor);
 
-        if (mTextDirection == View.TEXT_DIRECTION_RTL){
+        if (mTextDirection == View.TEXT_DIRECTION_RTL) {
             float tmpX = getWidth() / 2 + fontW / 2;
             for (char c : mAbstractText.toCharArray()) {
                 String sc = String.valueOf(c);
                 tmpX -= mPaint.measureText(sc);
                 canvas.drawText(sc, tmpX, getHeight() / 2 + fontH / 2 - bdDistance, mPaint);
             }
-        }else {
+        } else {
             canvas.drawText(mAbstractText, getWidth() / 2 - fontW / 2,
                     getHeight() / 2 + fontH / 2 - bdDistance, mPaint);
         }
@@ -166,11 +207,11 @@ public class TagView extends View {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (isViewClickable){
+        if (isViewClickable) {
             int y = (int) event.getY();
             int x = (int) event.getX();
             int action = event.getAction();
-            switch (action){
+            switch (action) {
                 case MotionEvent.ACTION_DOWN:
                     getParent().requestDisallowInterceptTouchEvent(true);
                     mLastY = y;
@@ -179,7 +220,7 @@ public class TagView extends View {
 
                 case MotionEvent.ACTION_MOVE:
                     if (Math.abs(mLastY - y) > mSlopThreshold
-                            || Math.abs(mLastX - x) > mSlopThreshold){
+                            || Math.abs(mLastX - x) > mSlopThreshold) {
                         getParent().requestDisallowInterceptTouchEvent(false);
                         isMoved = true;
                         return false;
@@ -192,11 +233,11 @@ public class TagView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (isViewClickable && mOnTagClickListener != null){
+        if (isViewClickable && mOnTagClickListener != null) {
             int x = (int) event.getX();
             int y = (int) event.getY();
             int action = event.getAction();
-            switch (action){
+            switch (action) {
                 case MotionEvent.ACTION_DOWN:
                     mLastY = y;
                     mLastX = x;
@@ -207,10 +248,10 @@ public class TagView extends View {
                     break;
 
                 case MotionEvent.ACTION_MOVE:
-                    if (isMoved){
+                    if (isMoved) {
                         break;
                     }
-                    if (Math.abs(mLastX - x) > mMoveSlop || Math.abs(mLastY - y) > mMoveSlop){
+                    if (Math.abs(mLastX - x) > mMoveSlop || Math.abs(mLastY - y) > mMoveSlop) {
                         isMoved = true;
                     }
                     break;
@@ -218,6 +259,7 @@ public class TagView extends View {
                 case MotionEvent.ACTION_UP:
                     isUp = true;
                     if (!isExecLongClick && !isMoved) {
+                        mNofication.notifyInternal((int) getTag());
                         mOnTagClickListener.onTagClick((int) getTag(), getText());
                     }
                     break;
@@ -227,32 +269,32 @@ public class TagView extends View {
         return super.onTouchEvent(event);
     }
 
-    public String getText(){
+    public String getText() {
         return mOriginText;
     }
 
-    public boolean getIsViewClickable(){
+    public boolean getIsViewClickable() {
         return isViewClickable;
     }
 
-    public void setTagMaxLength(int maxLength){
+    public void setTagMaxLength(int maxLength) {
         this.mTagMaxLength = maxLength;
         onDealText();
     }
 
-    public void setOnTagClickListener(OnTagClickListener listener){
+    public void setOnTagClickListener(OnTagClickListener listener) {
         this.mOnTagClickListener = listener;
     }
 
-    public void setTagBackgroundColor(int color){
+    public void setTagBackgroundColor(int color) {
         this.mBackgroundColor = color;
     }
 
-    public void setTagBorderColor(int color){
+    public void setTagBorderColor(int color) {
         this.mBorderColor = color;
     }
 
-    public void setTagTextColor(int color){
+    public void setTagTextColor(int color) {
         this.mTextColor = color;
     }
 
@@ -269,6 +311,10 @@ public class TagView extends View {
         onDealText();
     }
 
+    public void setMode(LayouMode mode) {
+        this.mMode = mode;
+    }
+
     public void setHorizontalPadding(int padding) {
         this.mHorizontalPadding = padding;
     }
@@ -281,8 +327,9 @@ public class TagView extends View {
         this.isViewClickable = clickable;
     }
 
-    public interface OnTagClickListener{
+    public interface OnTagClickListener {
         void onTagClick(int position, String text);
+
         void onTagLongClick(int position, String text);
     }
 

@@ -16,10 +16,15 @@ import java.util.List;
 
 import co.lujun.androidtagview.TagContainerLayout;
 import co.lujun.androidtagview.TagView;
+import co.lujun.androidtagview.ext.LayouMode;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TagContainerLayout mTagContainerLayout1, mTagContainerLayout2, mTagContainerLayout3, mTagContainerLayout4;
+    private TagContainerLayout
+            mTagContainerLayout1,
+            mTagContainerLayout2,
+            mTagContainerLayout3,
+            mTagContainerLayout5,
+            mTagContainerLayout4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mTagContainerLayout1 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout1);
+        mTagContainerLayout2 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout2);
+        mTagContainerLayout3 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout3);
+        mTagContainerLayout4 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout4);
+        mTagContainerLayout5 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout5);
+
 
         List<String> list1 = new ArrayList<String>();
         list1.add("Java");
@@ -53,15 +65,18 @@ public class MainActivity extends AppCompatActivity {
         list2.add("Norway");
         list2.add("Uruguay");
         list2.add("Brazil");
+        List<String> list5 = new ArrayList<String>();
+        list2.add("M");
+        list2.add("K");
+        list2.add("US10");
+        list2.add("SMALL");
+        list2.add("T");
+        list2.add("F");
 
         String[] list3 = new String[]{"Persian", "波斯语", "فارسی", "Hello", "你好", "سلام"};
         String[] list4 = new String[]{"Adele", "Whitney Houston"};
 
-        mTagContainerLayout1 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout1);
-        mTagContainerLayout2 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout2);
-        mTagContainerLayout3 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout3);
-        mTagContainerLayout4 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout4);
-
+        mTagContainerLayout1.setMode(LayouMode.SINGLE_CHOICE);
         // Set custom click listener
         mTagContainerLayout1.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
@@ -92,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // Custom settings
 //        mTagContainerLayout1.setTagMaxLength(4);
 
@@ -104,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
 //        mTagContainerLayout1.setTagTextDirection(View.TEXT_DIRECTION_RTL);
 
         // support typeface
-//        Typeface typeface = Typeface.createFromAsset(getAssets(), "iran_sans.ttf");
-//        mTagContainerLayout.setTagTypeface(typeface);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "iran_sans.ttf");
+        mTagContainerLayout1.setTagTypeface(typeface);
 
         // adjust distance baseline and descent
 //        mTagContainerLayout.setTagBdDistance(4.6f);
@@ -115,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
         mTagContainerLayout2.setTags(list2);
         mTagContainerLayout3.setTags(list3);
         mTagContainerLayout4.setTags(list4);
+
+        mTagContainerLayout5.setThemeOnActive(R.style.tagactive);
+        mTagContainerLayout5.setTheme(R.style.tagnormal);
+        mTagContainerLayout5.setMode(LayouMode.SINGLE_CHOICE);
+        mTagContainerLayout5.setTags(list5);
+
 
         final EditText text = (EditText) findViewById(R.id.text_tag);
         Button btnAddTag = (Button) findViewById(R.id.btn_add_tag);

@@ -17,4 +17,16 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="tagnormal">
+        <item name="ptc_tag_border_color">@color/colorPrimary</item>
+        <item name="ptc_tag_background_color">@color/colorPrimaryDark</item>
+        <item name="ptc_tag_text_color">@color/colorAccent</item>
+    </style>
+
+    <style name="tagactive">
+        <item name="ptc_tag_border_color">@color/colorwhite</item>
+        <item name="ptc_tag_background_color">@color/colorwhitew</item>
+        <item name="ptc_tag_text_color">@color/colorAccent</item>
+    </style>
 </resources>

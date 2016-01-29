@@ -33,9 +33,15 @@
             <enum name="pure_cyan" value="1" />
             <enum name="pure_teal" value="2" />
         </attr>
-        <attr name="tag_text_direction" format="enum" >
+        <attr name="tag_text_direction" format="enum">
             <enum name="ltr" value="3" />
             <enum name="rtl" value="4" />
         </attr>
+    </declare-styleable>
+
+    <declare-styleable name="TagContainerLayoutColorTheme">
+        <attr name="ptc_tag_border_color" format="color" />
+        <attr name="ptc_tag_background_color" format="color" />
+        <attr name="ptc_tag_text_color" format="color" />
     </declare-styleable>
 </resources>
