@@ -65,13 +65,15 @@ public class MainActivity extends AppCompatActivity {
         list2.add("Norway");
         list2.add("Uruguay");
         list2.add("Brazil");
+
+
         List<String> list5 = new ArrayList<String>();
-        list2.add("M");
-        list2.add("K");
-        list2.add("US10");
-        list2.add("SMALL");
-        list2.add("T");
-        list2.add("F");
+        list5.add("M");
+        list5.add("K");
+        list5.add("US10");
+        list5.add("SMALL");
+        list5.add("T");
+        list5.add("F");
 
         String[] list3 = new String[]{"Persian", "波斯语", "فارسی", "Hello", "你好", "سلام"};
         String[] list4 = new String[]{"Adele", "Whitney Houston"};
