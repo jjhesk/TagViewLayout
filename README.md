@@ -1,6 +1,6 @@
 # AndroidTagView
 
-[![Build Status](https://travis-ci.org/whilu/AndroidTagView.svg)](https://travis-ci.org/whilu/AndroidTagView) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidTagView-green.svg?style=true)](https://android-arsenal.com/details/1/2992)
+[![Build Status](https://travis-ci.org/whilu/AndroidTagView.svg)](https://travis-ci.org/whilu/AndroidTagView) 
 
 An Android TagView library. You can customize awesome TagView by using this library.
 
@@ -14,9 +14,9 @@ An Android TagView library. You can customize awesome TagView by using this libr
 
 Add below dependency in your **build.gradle** file.
 
-```groovy
+```gradle
 dependencies {
-    compile 'co.lujun:androidtagview:1.0.2'
+    compile 'com.hkm:androidtagview:1.0.2'
 }
 ```
 
@@ -25,7 +25,7 @@ dependencies {
 Use the AndroidTagView in layout file, you can add customized attributes here.
 
 ```xml
-<co.lujun.androidtagview.TagContainerLayout
+<com.hkm.androidtagview.TagContainerLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
@@ -194,12 +194,11 @@ mTagContainerLayout.removeAllTags();
 ## Sample App
 [APK](/sample/sample-release.apk)
 
-## About
-If you have any questions, contact me: [lujun.byte#gmail.com](mailto:lujun.byte@gmail.com).
+
 
 ## License
 
-    Copyright 2015 lujun
+    Copyright 2015 jjhesk
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
