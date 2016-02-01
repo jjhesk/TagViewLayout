@@ -1,1 +1,1 @@
-include ':sample', ':androidtagview'
+include ':sample', ':soltag'

@@ -1,4 +1,4 @@
-package co.lujun.androidtagview;
+package co.hkm.soltag;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import co.lujun.androidtagview.ext.LayouMode;
+import co.hkm.soltag.ext.LayouMode;
 
 /**
  * Author: lujun(http://blog.lujun.co)
@@ -476,6 +476,8 @@ public class TagContainerLayout extends ViewGroup {
 
     /**
      * only communicate from the TagView
+     *
+     * @param fromItemPosition position of the tag
      */
     public void notifyInternal(int fromItemPosition) {
         if (mMode == LayouMode.DEFAULT) {
@@ -630,7 +632,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get current drag view state.
      *
-     * @return
+     * @return switchable state
      */
     public int getTagViewState() {
         return mTagViewState;
@@ -639,7 +641,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView text baseline and descent distance.
      *
-     * @return
+     * @return distance of the border
      */
     public float getTagBdDistance() {
         return mTagBdDistance;
@@ -648,16 +650,17 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView text baseline and descent distance.
      *
-     * @param tagBdDistance
+     * @param tagBdDistance distance of the tag border
      */
     public void setTagBdDistance(float tagBdDistance) {
         this.mTagBdDistance = dp2px(getContext(), tagBdDistance);
     }
 
+
     /**
      * Set tags
      *
-     * @param tags
+     * @param tags the array of tags
      */
     public void setTags(List<String> tags) {
         mTags = tags;
@@ -667,7 +670,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set tags
      *
-     * @param tags
+     * @param tags tags in string array
      */
     public void setTags(String... tags) {
         mTags = Arrays.asList(tags);
@@ -677,7 +680,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Inserts the specified TagView into this ContainerLayout at the end.
      *
-     * @param text
+     * @param text the string in tag
      */
     public void addTag(String text) {
         addTag(text, mChildViews.size());
@@ -687,8 +690,8 @@ public class TagContainerLayout extends ViewGroup {
      * Inserts the specified TagView into this ContainerLayout at the specified location.
      * The TagView is inserted before the current element at the specified location.
      *
-     * @param text
-     * @param position
+     * @param text     the string
+     * @param position the position
      */
     public void addTag(String text, int position) {
         onAddTag(text, position);
@@ -698,7 +701,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Remove a TagView in specified position.
      *
-     * @param position
+     * @param position position of the tag
      */
     public void removeTag(int position) {
         onRemoveTag(position);
@@ -717,7 +720,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set OnTagClickListener for TagView.
      *
-     * @param listener
+     * @param listener the listener
      */
     public void setOnTagClickListener(TagView.OnTagClickListener listener) {
         mOnTagClickListener = listener;
@@ -726,8 +729,8 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView text.
      *
-     * @param position
-     * @return
+     * @param position the position
+     * @return the string to be returned
      */
     public String getTagText(int position) {
         return ((TagView) mChildViews.get(position)).getText();
@@ -736,7 +739,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get a string list for all tags in TagContainerLayout.
      *
-     * @return
+     * @return the list in string
      */
     public List<String> getTags() {
         List<String> tmpList = new ArrayList<String>();
@@ -751,7 +754,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set whether the child view can be dragged.
      *
-     * @param enable
+     * @param enable enable to true
      */
     public void setDragEnable(boolean enable) {
         this.mDragEnable = enable;
@@ -760,7 +763,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get current view is drag enable attribute.
      *
-     * @return
+     * @return true or false
      */
     public boolean getDragEnable() {
         return mDragEnable;
@@ -769,7 +772,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set vertical interval
      *
-     * @param interval
+     * @param interval float for interval
      */
     public void setVerticalInterval(float interval) {
         mVerticalInterval = (int) dp2px(getContext(), interval);
@@ -779,7 +782,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get vertical interval in this view.
      *
-     * @return
+     * @return height unit in hi
      */
     public int getVerticalInterval() {
         return mVerticalInterval;
@@ -788,7 +791,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set horizontal interval.
      *
-     * @param interval
+     * @param interval width unit for horizontal
      */
     public void setHorizontalInterval(float interval) {
         mHorizontalInterval = (int) dp2px(getContext(), interval);
@@ -798,7 +801,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get horizontal interval in this view.
      *
-     * @return
+     * @return get the unit of width
      */
     public int getHorizontalInterval() {
         return mHorizontalInterval;
@@ -807,7 +810,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagContainerLayout border width.
      *
-     * @return
+     * @return get the unit of the border
      */
     public float getBorderWidth() {
         return mBorderWidth;
@@ -816,7 +819,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagContainerLayout border width.
      *
-     * @param width
+     * @param width get the border of the width unit
      */
     public void setBorderWidth(float width) {
         this.mBorderWidth = width;
@@ -825,7 +828,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagContainerLayout border radius.
      *
-     * @return
+     * @return as it is
      */
     public float getBorderRadius() {
         return mBorderRadius;
@@ -834,7 +837,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagContainerLayout border radius.
      *
-     * @param radius
+     * @param radius as it is
      */
     public void setBorderRadius(float radius) {
         this.mBorderRadius = radius;
@@ -843,7 +846,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagContainerLayout border color.
      *
-     * @return
+     * @return as it is
      */
     public int getBorderColor() {
         return mBorderColor;
@@ -852,7 +855,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagContainerLayout border color.
      *
-     * @param color
+     * @param color as it is
      */
     public void setBorderColor(int color) {
         this.mBorderColor = color;
@@ -861,7 +864,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagContainerLayout background color.
      *
-     * @return
+     * @return as it is
      */
     public int getBackgroundColor() {
         return mBackgroundColor;
@@ -870,7 +873,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagContainerLayout background color.
      *
-     * @param color
+     * @param color as it is
      */
     public void setBackgroundColor(int color) {
         this.mBackgroundColor = color;
@@ -879,7 +882,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get container layout gravity.
      *
-     * @return
+     * @return as it is
      */
     public int getGravity() {
         return mGravity;
@@ -888,7 +891,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set container layout gravity.
      *
-     * @param gravity
+     * @param gravity as it is
      */
     public void setGravity(int gravity) {
         this.mGravity = gravity;
@@ -897,7 +900,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagContainerLayout ViewDragHelper sensitivity.
      *
-     * @return
+     * @return as it is
      */
     public float getSensitivity() {
         return mSensitivity;
@@ -906,16 +909,16 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagContainerLayout ViewDragHelper sensitivity.
      *
-     * @param sensitivity
+     * @param sensitivity as it is
      */
     public void setSensitivity(float sensitivity) {
         this.mSensitivity = sensitivity;
     }
 
     /**
-     * Set the TagView text max length(must >=3).
+     * Set the TagView text max length (must be more or big than 3).
      *
-     * @param maxLength
+     * @param maxLength the max length of the text inside each tagview
      */
     public void setTagMaxLength(int maxLength) {
         mTagMaxLength = maxLength < TAG_MIN_LENGTH ? TAG_MIN_LENGTH : maxLength;
@@ -924,7 +927,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView max length.
      *
-     * @return
+     * @return as it is
      */
     public int getTagMaxLength() {
         return mTagMaxLength;
@@ -933,7 +936,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView to use this theme when the click is active
      *
-     * @param theme
+     * @param theme as it is
      */
     public void setThemeOnActive(int theme) {
         mThemeActive = theme;
@@ -943,7 +946,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView theme.
      *
-     * @param theme
+     * @param theme as it is
      */
     public void setTheme(int theme) {
         mTheme = theme;
@@ -953,7 +956,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView theme.
      *
-     * @return
+     * @return as it is
      */
     public int getTheme() {
         return mTheme;
@@ -962,7 +965,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView is clickable.
      *
-     * @return
+     * @return as it is
      */
     public boolean getIsTagViewClickable() {
         return isTagViewClickable;
@@ -971,7 +974,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView is clickable
      *
-     * @param clickable
+     * @param clickable as it is
      */
     public void setIsTagViewClickable(boolean clickable) {
         this.isTagViewClickable = clickable;
@@ -980,7 +983,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView border width.
      *
-     * @return
+     * @return as it is
      */
     public float getTagBorderWidth() {
         return mTagBorderWidth;
@@ -989,7 +992,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView border width.
      *
-     * @param width
+     * @param width as it is
      */
     public void setTagBorderWidth(float width) {
         this.mTagBorderWidth = width;
@@ -998,7 +1001,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView border radius.
      *
-     * @return
+     * @return as it is
      */
     public float getTagBorderRadius() {
         return mTagBorderRadius;
@@ -1007,7 +1010,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView border radius.
      *
-     * @param radius
+     * @param radius as it is
      */
     public void setTagBorderRadius(float radius) {
         this.mTagBorderRadius = radius;
@@ -1016,7 +1019,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView text size.
      *
-     * @return
+     * @return as it is
      */
     public float getTagTextSize() {
         return mTagTextSize;
@@ -1025,7 +1028,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView text size.
      *
-     * @param size
+     * @param size as it is
      */
     public void setTagTextSize(float size) {
         this.mTagTextSize = size;
@@ -1034,7 +1037,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView horizontal padding.
      *
-     * @return
+     * @return as it is
      */
     public int getTagHorizontalPadding() {
         return mTagHorizontalPadding;
@@ -1043,7 +1046,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView horizontal padding.
      *
-     * @param padding
+     * @param padding as it is
      */
     public void setTagHorizontalPadding(int padding) {
         int ceilWidth = ceilTagBorderWidth();
@@ -1053,7 +1056,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView vertical padding.
      *
-     * @return
+     * @return as it is
      */
     public int getTagVerticalPadding() {
         return mTagVerticalPadding;
@@ -1062,7 +1065,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView vertical padding.
      *
-     * @param padding
+     * @param padding as it is
      */
     public void setTagVerticalPadding(int padding) {
         int ceilWidth = ceilTagBorderWidth();
@@ -1072,7 +1075,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView border color.
      *
-     * @return
+     * @return as it is
      */
     public int getTagBorderColor() {
         return mTagBorderColor;
@@ -1081,7 +1084,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView border color.
      *
-     * @param color
+     * @param color as it is
      */
     public void setTagBorderColor(int color) {
         this.mTagBorderColor = color;
@@ -1090,7 +1093,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView background color.
      *
-     * @return
+     * @return as it is
      */
     public int getTagBackgroundColor() {
         return mTagBackgroundColor;
@@ -1099,7 +1102,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView background color.
      *
-     * @param color
+     * @param color as it is
      */
     public void setTagBackgroundColor(int color) {
         this.mTagBackgroundColor = color;
@@ -1108,17 +1111,17 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView text color.
      *
-     * @return
+     * @return as it is
      */
     public int getTagTextColor() {
         return mTagTextColor;
     }
 
     /**
-     * Set tag text direction, support:View.TEXT_DIRECTION_RTL & View.TEXT_DIRECTION_LTR,
+     * Set tag text direction, support:View.TEXT_DIRECTION_RTL AND  View.TEXT_DIRECTION_LTR,
      * default View.TEXT_DIRECTION_LTR
      *
-     * @param textDirection
+     * @param textDirection as it is DIRECITON
      */
     public void setTagTextDirection(int textDirection) {
         this.mTagTextDirection = textDirection;
@@ -1127,7 +1130,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get TagView typeface.
      *
-     * @return
+     * @return as it is
      */
     public Typeface getTagTypeface() {
         return mTagTypeface;
@@ -1136,7 +1139,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView typeface.
      *
-     * @param typeface
+     * @param typeface as it is
      */
     public void setTagTypeface(Typeface typeface) {
         this.mTagTypeface = typeface;
@@ -1145,7 +1148,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Get tag text direction
      *
-     * @return
+     * @return as it is
      */
     public int getTagTextDirection() {
         return mTagTextDirection;
@@ -1154,7 +1157,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Set TagView text color.
      *
-     * @param color
+     * @param color as it is
      */
     public void setTagTextColor(int color) {
         this.mTagTextColor = color;

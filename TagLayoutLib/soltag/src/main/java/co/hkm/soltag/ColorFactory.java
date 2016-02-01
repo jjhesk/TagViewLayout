@@ -1,10 +1,12 @@
-package co.lujun.androidtagview;
+package co.hkm.soltag;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.StyleRes;
+
+import co.hkm.soltag.R;
 
 /**
  * Author: lujun(http://blog.lujun.co)
@@ -13,8 +15,8 @@ import android.support.annotation.StyleRes;
 public class ColorFactory {
 
     /**
-     * ============= -->border color
-     * background color<---||-  Text --||-->text color
+     * ============= border color
+     * background color... Text ...text color
      * =============
      */
 

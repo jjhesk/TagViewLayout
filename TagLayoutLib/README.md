@@ -1,12 +1,11 @@
 # AndroidTagView
 
-[![Build Status](https://travis-ci.org/whilu/AndroidTagView.svg)](https://travis-ci.org/whilu/AndroidTagView) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidTagView-green.svg?style=true)](https://android-arsenal.com/details/1/2992)
 
 An Android TagView library. You can customize awesome TagView by using this library.
 
 ## Screenshots
 
-<img src="/screenshots/androidtagview_record_1.gif" alt="androidtagview_record_1.gif" title="androidtagview_record_1.gif" width="400" height="660" /> <img src="/screenshots/device-2016-01-16-233617.png" alt="device-2016-01-16-233617.png" title="device-2016-01-16-233617.png" width="400" height="660" />
+
 
 ## Usage
 
@@ -14,9 +13,9 @@ An Android TagView library. You can customize awesome TagView by using this libr
 
 Add below dependency in your **build.gradle** file.
 
-```groovy
+```gradle
 dependencies {
-    compile 'co.lujun:androidtagview:1.0.2'
+    compile 'com.hkm.taglib:tag:1.0.2'
 }
 ```
 
@@ -25,7 +24,7 @@ dependencies {
 Use the AndroidTagView in layout file, you can add customized attributes here.
 
 ```xml
-<co.lujun.androidtagview.TagContainerLayout
+<com.hkm.soltag.TagContainerLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
@@ -178,28 +177,13 @@ mTagContainerLayout.removeAllTags();
 ```
 
 ## Change logs
-###1.0.2(2016-1-18)
-- support [gravity](#gravity) for ```TagContainerLayout```
-- support set typeface
-
-###1.0.1(2016-1-14)
-- support text [direction](#directions)
-- add ```removeAllTags()``` method for remove all TagViews
-- fixed issue [#1](https://github.com/whilu/AndroidTagView/issues/1)
-- fixed other bugs
-
-###1.0.0(2016-1-6)
-- First release
 
 ## Sample App
 [APK](/sample/sample-release.apk)
 
-## About
-If you have any questions, contact me: [lujun.byte#gmail.com](mailto:lujun.byte@gmail.com).
-
 ## License
 
-    Copyright 2015 lujun
+    Copyright 2015 hkm jet fighter-101
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

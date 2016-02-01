@@ -1,4 +1,4 @@
-package co.lujun.androidtagview;
+package co.hkm.soltag;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
-import co.lujun.androidtagview.ext.LayouMode;
+import co.hkm.soltag.ext.LayouMode;
 
 /**
  * Author: lujun(http://blog.lujun.co)

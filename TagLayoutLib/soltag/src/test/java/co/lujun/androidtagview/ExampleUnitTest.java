@@ -1,4 +1,4 @@
-package co.lujun.androidtagview;
+package co.hkm.soltag;
 
 import org.junit.Test;
 

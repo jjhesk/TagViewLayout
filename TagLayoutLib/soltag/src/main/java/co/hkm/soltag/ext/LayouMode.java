@@ -1,4 +1,4 @@
-package co.lujun.androidtagview.ext;
+package co.hkm.soltag.ext;
 
 /**
  * Created by hesk on 29/1/16.

@@ -1,30 +1,16 @@
 package co.lujun.sample;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.lujun.androidtagview.TagContainerLayout;
-import co.lujun.androidtagview.TagView;
-import co.lujun.androidtagview.ext.LayouMode;
+
 
 public class MainActivity extends AppCompatActivity {
-    private TagContainerLayout
-            mTagContainerLayout1,
-            mTagContainerLayout2,
-            mTagContainerLayout3,
-            mTagContainerLayout5,
-            mTagContainerLayout4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +18,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mTagContainerLayout1 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout1);
-        mTagContainerLayout2 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout2);
-        mTagContainerLayout3 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout3);
-        mTagContainerLayout4 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout4);
-        mTagContainerLayout5 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout5);
-
 
         List<String> list1 = new ArrayList<String>();
         list1.add("Java");
@@ -78,77 +57,11 @@ public class MainActivity extends AppCompatActivity {
         String[] list3 = new String[]{"Persian", "波斯语", "فارسی", "Hello", "你好", "سلام"};
         String[] list4 = new String[]{"Adele", "Whitney Houston"};
 
-        mTagContainerLayout1.setMode(LayouMode.SINGLE_CHOICE);
-        // Set custom click listener
-        mTagContainerLayout1.setOnTagClickListener(new TagView.OnTagClickListener() {
-            @Override
-            public void onTagClick(int position, String text) {
-                Toast.makeText(MainActivity.this, "click-position:" + position + ", text:" + text,
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onTagLongClick(final int position, String text) {
-                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("long click")
-                        .setMessage("You will delete this tag!")
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mTagContainerLayout1.removeTag(position);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create();
-                dialog.show();
-            }
-        });
-
-
-        // Custom settings
-//        mTagContainerLayout1.setTagMaxLength(4);
-
-        // Set the custom theme
-//        mTagContainerLayout1.setTheme(ColorFactory.PURE_CYAN);
-
-        // If you want to use your colors for TagView, remember set the theme with ColorFactory.NONE
-//        mTagContainerLayout1.setTheme(ColorFactory.NONE);
-//        mTagContainerLayout1.setTagBackgroundColor(Color.TRANSPARENT);
-//        mTagContainerLayout1.setTagTextDirection(View.TEXT_DIRECTION_RTL);
-
-        // support typeface
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "iran_sans.ttf");
-        mTagContainerLayout1.setTagTypeface(typeface);
-
-        // adjust distance baseline and descent
-//        mTagContainerLayout.setTagBdDistance(4.6f);
 
         // After you set your own attributes for TagView, then set tag(s) or add tag(s)
-        mTagContainerLayout1.setTags(list1);
-        mTagContainerLayout2.setTags(list2);
-        mTagContainerLayout3.setTags(list3);
-        mTagContainerLayout4.setTags(list4);
-
-        mTagContainerLayout5.setThemeOnActive(R.style.tagactive);
-        mTagContainerLayout5.setTheme(R.style.tagnormal);
-        mTagContainerLayout5.setMode(LayouMode.SINGLE_CHOICE);
-        mTagContainerLayout5.setTags(list5);
-
-
-        final EditText text = (EditText) findViewById(R.id.text_tag);
-        Button btnAddTag = (Button) findViewById(R.id.btn_add_tag);
-        btnAddTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTagContainerLayout1.addTag(text.getText().toString());
-                // Add tag in the specified position
-//                mTagContainerLayout1.addTag(text.getText().toString(), 4);
-            }
-        });
+        SampleCollections.ROUND_CORNER.render(this).define(this).setTags(list1);
+        SampleCollections.COUNTRY_LIST.render(this).define(this).setTags(list2);
+        SampleCollections.SPECIAL_TEXT.render(this).define(this).setTags(list3);
+        SampleCollections.HBX_STYLE.render(this).define(this).setTags(list5);
     }
 }
