@@ -6,6 +6,7 @@ An Android TagView library. You can customize awesome TagView by using this libr
 
 ## Screenshots
 
+https://youtu.be/VHzBJvD-hjU
 
 ## Usage
 
