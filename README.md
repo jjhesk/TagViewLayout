@@ -1,4 +1,4 @@
-# AndroidTagView
+# TagViewLayout Android
 [ ![Download](https://api.bintray.com/packages/jjhesk/maven/tag/images/download.svg) ](https://bintray.com/jjhesk/maven/tag/_latestVersion)
 
 
