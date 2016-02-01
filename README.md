@@ -8,6 +8,8 @@ An Android TagView library. You can customize awesome TagView by using this libr
 
 https://youtu.be/VHzBJvD-hjU
 
+![IMEF](baconLMY48Yhesk02012016174101.gif)
+
 ## Usage
 
 ### Step 1
