@@ -4,11 +4,12 @@
 
 An Android TagView library. You can customize awesome TagView by using this library.
 
-## Screenshots
+## Demo
 
-https://youtu.be/VHzBJvD-hjU
+[preset layout configurations in examples](https://github.com/jjhesk/TagViewLayout/blob/master/TagLayoutLib/sample/src/main/res/layout/content_main.xml)
 
-![IMEF](baconLMY48Yhesk02012016174101.gif)
+[Video Demo](https://youtu.be/VHzBJvD-hjU)
+
 
 ## Usage
 
@@ -183,6 +184,9 @@ mTagContainerLayout.removeAllTags();
 
 ## Sample App
 [APK](/sample/sample-release.apk)
+
+##Screenshots
+![IMEF](baconLMY48Yhesk02012016174101.gif)
 
 ## License
 
