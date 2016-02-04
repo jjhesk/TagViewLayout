@@ -10,6 +10,11 @@ An Android TagView library. You can customize awesome TagView by using this libr
 
 [Video Demo](https://youtu.be/VHzBJvD-hjU)
 
+## Feature
+- [x] multiple choice mode
+- [x] single selection choice mode
+- [x] toggle and switching color by xml style configurations
+- [x] styling via code base / xml base
 
 ## Usage
 
