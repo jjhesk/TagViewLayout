@@ -33,7 +33,7 @@ dependencies {
 Use the AndroidTagView in layout file, you can add customized attributes here.
 
 ```xml
-<com.hkm.soltag.TagContainerLayout
+<co.hkm.soltag.TagContainerLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
