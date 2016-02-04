@@ -24,7 +24,7 @@ public enum SampleCollections {
     ROUND_CORNER(R.id.tagcontainerLayout1) {
         @Override
         protected TagContainerLayout define(final Activity activity) {
-            container.setMode(LayouMode.SINGLE_CHOICE);
+            container.setMode(setupModeCode);
             // Set custom click listener
             container.setOnTagClickListener(new TagView.OnTagClickListener() {
                 @Override
@@ -69,8 +69,7 @@ public enum SampleCollections {
 
             return container;
         }
-    },
-    COUNTRY_LIST(R.id.tagcontainerLayout2) {
+    }, COUNTRY_LIST(R.id.tagcontainerLayout2) {
         @Override
         protected TagContainerLayout define(final Activity act) {
             Typeface typeface = Typeface.createFromAsset(act.getAssets(), "iran_sans.ttf");
@@ -80,7 +79,7 @@ public enum SampleCollections {
     }, SPECIAL_TEXT(R.id.tagcontainerLayout3) {
         @Override
         protected TagContainerLayout define(final Activity act) {
-
+            container.setMode(setupModeCode);
             return container;
         }
     }, HBX_STYLE(R.id.tagcontainerLayout5) {
@@ -88,7 +87,47 @@ public enum SampleCollections {
         protected TagContainerLayout define(final Activity act) {
             container.setThemeOnActive(R.style.tagactive);
             container.setTheme(R.style.tagnormal);
-            container.setMode(LayouMode.SINGLE_CHOICE);
+            container.setMode(setupModeCode);
+            container.setOnTagClickListener(new TagView.OnTagClickListener() {
+                @Override
+                public void onTagClick(int position, String text) {
+                    Toast.makeText(act, "click-position:" + position + ", text:" + text,
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onTagLongClick(final int position, String text) {
+                    AlertDialog dialog = new AlertDialog.Builder(act)
+                            .setTitle("long click")
+                            .setMessage("You will delete this tag!")
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    container.removeTag(position);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create();
+                    dialog.show();
+                }
+            });
+
+            return container;
+        }
+
+    },
+
+    MULTIPLE_CHOICE_SAMPLE(R.id.tagcontainerLayout4) {
+        @Override
+        protected TagContainerLayout define(final Activity act) {
+            container.setThemeOnActive(R.style.tagactive_big);
+            container.setTheme(R.style.tagnormal_big);
+            container.setMode(setupModeCode);
             container.setOnTagClickListener(new TagView.OnTagClickListener() {
                 @Override
                 public void onTagClick(int position, String text) {
@@ -123,9 +162,11 @@ public enum SampleCollections {
     };
     private int layoutid;
     protected TagContainerLayout container;
+    protected LayouMode setupModeCode;
 
     SampleCollections(@IdRes final int layout) {
         layoutid = layout;
+        setupModeCode = LayouMode.DEFAULT;
     }
 
     public SampleCollections render(Activity view) {
@@ -135,6 +176,11 @@ public enum SampleCollections {
 
     public SampleCollections render(View view) {
         container = (TagContainerLayout) view.findViewById(layoutid);
+        return this;
+    }
+
+    public SampleCollections setMode(final LayouMode modecode) {
+        setupModeCode = modecode;
         return this;
     }
 

@@ -95,9 +95,9 @@ public class ColorFactory {
         int base = ta.getResourceId(1, R.drawable.tag_fc_blue);
 
         theme_style_config = new int[]{
-                ta.getColor(0, Color.BLUE),
-                ta.getColor(1, Color.BLUE),
-                ta.getColor(2, Color.BLACK)
+                ta.getColor(0, Color.WHITE),
+                ta.getColor(1, Color.WHITE),
+                ta.getColor(2, Color.WHITE)
         };
 
         ta.recycle();

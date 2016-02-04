@@ -29,4 +29,14 @@
         <item name="ptc_tag_background_color">@color/colorwhitew</item>
         <item name="ptc_tag_text_color">@color/colorAccent</item>
     </style>
+
+    <style name="tagnormal.big" parent="tagnormal">
+        <item name="ptc_tag_background_color">@color/colorAccent</item>
+
+    </style>
+
+    <style name="tagactive.big" parent="tagactive">
+        <item name="ptc_tag_background_color">@color/colorwhite_02</item>
+        <item name="ptc_tag_border_color">@color/colorPrimaryDark</item>
+    </style>
 </resources>

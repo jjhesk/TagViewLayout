@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.hkm.soltag.ext.LayouMode;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,13 +56,35 @@ public class MainActivity extends AppCompatActivity {
         list5.add("F");
 
         String[] list3 = new String[]{"Persian", "波斯语", "فارسی", "Hello", "你好", "سلام"};
-        String[] list4 = new String[]{"Adele", "Whitney Houston"};
+        String[] list4 = new String[]{"Adele", "Whitney Houston", "Hotel", "Hospital", "Ice House", "Ice Land"};
 
 
         // After you set your own attributes for TagView, then set tag(s) or add tag(s)
-        SampleCollections.ROUND_CORNER.render(this).define(this).setTags(list1);
+        SampleCollections.ROUND_CORNER
+                .render(this)
+                .setMode(LayouMode.SINGLE_CHOICE)
+                .define(this)
+                .setTags(list1);
+
         SampleCollections.COUNTRY_LIST.render(this).define(this).setTags(list2);
-        SampleCollections.SPECIAL_TEXT.render(this).define(this).setTags(list3);
-        SampleCollections.HBX_STYLE.render(this).define(this).setTags(list5);
+
+        SampleCollections.SPECIAL_TEXT
+                .render(this)
+
+                .define(this)
+                .setTags(list3);
+
+
+        SampleCollections.MULTIPLE_CHOICE_SAMPLE
+                .render(this)
+                .setMode(LayouMode.MULTIPLE_CHOICE)
+                .define(this)
+                .setTags(list4);
+
+        SampleCollections.HBX_STYLE
+                .render(this)
+                .setMode(LayouMode.SINGLE_CHOICE)
+                .define(this)
+                .setTags(list5);
     }
 }

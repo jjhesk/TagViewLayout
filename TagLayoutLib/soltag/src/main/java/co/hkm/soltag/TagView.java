@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Date;
+
 import co.hkm.soltag.ext.LayouMode;
 
 /**
@@ -86,7 +88,7 @@ public class TagView extends View {
     /**
      * How long trigger long click callback(default 500ms)
      */
-    private int mLongPressTime = 500;
+    private int mLongPressTime = 900;
 
     /**
      * Text direction(support:TEXT_DIRECTION_RTL & TEXT_DIRECTION_LTR, default TEXT_DIRECTION_LTR)
@@ -115,6 +117,9 @@ public class TagView extends View {
     private LayouMode mMode;
     private TagContainerLayout mNofication;
 
+
+    private boolean flag_on;
+
     private Runnable mLongClickHandle = new Runnable() {
         @Override
         public void run() {
@@ -137,6 +142,7 @@ public class TagView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRectF = new RectF();
         mOriginText = text == null ? "" : text;
+        flag_on = false;
     }
 
     public void setNotification(TagContainerLayout ly) {
@@ -219,8 +225,7 @@ public class TagView extends View {
                     break;
 
                 case MotionEvent.ACTION_MOVE:
-                    if (Math.abs(mLastY - y) > mSlopThreshold
-                            || Math.abs(mLastX - x) > mSlopThreshold) {
+                    if (Math.abs(mLastY - y) > mSlopThreshold || Math.abs(mLastX - x) > mSlopThreshold) {
                         getParent().requestDisallowInterceptTouchEvent(false);
                         isMoved = true;
                         return false;
@@ -231,12 +236,15 @@ public class TagView extends View {
         return super.dispatchTouchEvent(event);
     }
 
+    private long register_down_time;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (isViewClickable && mOnTagClickListener != null) {
             int x = (int) event.getX();
             int y = (int) event.getY();
             int action = event.getAction();
+            Date h;
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
                     mLastY = y;
@@ -245,6 +253,8 @@ public class TagView extends View {
                     isUp = false;
                     isExecLongClick = false;
                     postDelayed(mLongClickHandle, mLongPressTime);
+                    h = new Date();
+                    register_down_time = h.getTime();
                     break;
 
                 case MotionEvent.ACTION_MOVE:
@@ -258,10 +268,18 @@ public class TagView extends View {
 
                 case MotionEvent.ACTION_UP:
                     isUp = true;
-                    if (!isExecLongClick && !isMoved) {
+                /*    if (!isExecLongClick && !isMoved) {
                         mNofication.notifyInternal((int) getTag());
                         mOnTagClickListener.onTagClick((int) getTag(), getText());
+                    }*/
+                    h = new Date();
+                    if (!isMoved) {
+                        if (h.getTime() - register_down_time < mLongPressTime) {
+                            mNofication.notifyInternal((int) getTag());
+                            mOnTagClickListener.onTagClick((int) getTag(), getText());
+                        }
                     }
+
                     break;
             }
             return true;
@@ -309,6 +327,14 @@ public class TagView extends View {
     public void setTextSize(float size) {
         this.mTextSize = size;
         onDealText();
+    }
+
+    public boolean isFlag_on() {
+        return flag_on;
+    }
+
+    public void setFlag_on(boolean flag_on) {
+        this.flag_on = flag_on;
     }
 
     public void setMode(LayouMode mode) {

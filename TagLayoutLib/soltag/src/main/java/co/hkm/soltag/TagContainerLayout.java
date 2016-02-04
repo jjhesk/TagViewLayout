@@ -468,48 +468,84 @@ public class TagContainerLayout extends ViewGroup {
     }
 
     private void setProfile(TagView tagView, int[] profile) {
-        tagView.setTagBackgroundColor(profile[0]);
-        tagView.setTagBorderColor(profile[1]);
+        tagView.setTagBackgroundColor(profile[1]);
+        tagView.setTagBorderColor(profile[0]);
         tagView.setTagTextColor(profile[2]);
-
     }
 
     /**
      * only communicate from the TagView
      *
-     * @param fromItemPosition position of the tag
+     * @param notepos position of the tag
      */
-    public void notifyInternal(int fromItemPosition) {
+    public void notifyInternal(int notepos) {
+        int onNotePosition = scopePosition(notepos);
         if (mMode == LayouMode.DEFAULT) {
 
         } else if (mMode == LayouMode.SINGLE_CHOICE) {
             for (int i = 0; i < mChildViews.size(); i++) {
                 if (mChildViews.get(i) instanceof TagView) {
                     TagView d = (TagView) mChildViews.get(i);
-                    if (fromItemPosition == i) {
+                    if (onNotePosition == i) {
                         setProfile(d, profile_active);
+                        d.setFlag_on(true);
                     } else {
                         setProfile(d, profile_normal);
+                        d.setFlag_on(false);
                     }
-
                     d.postInvalidate();
                 }
             }
 
         } else if (mMode == LayouMode.MULTIPLE_CHOICE) {
-
-        }
-    }
-
-    public void setMode(LayouMode mode) {
-        mMode = mode;
-        for (int i = 0; i < mChildViews.size(); i++) {
-            if (mChildViews.get(i) instanceof TagView) {
-                TagView d = (TagView) mChildViews.get(i);
-                d.setMode(mode);
+            if (mChildViews.get(onNotePosition) instanceof TagView) {
+                TagView d = (TagView) mChildViews.get(onNotePosition);
+                if (d.isFlag_on()) {
+                    d.setFlag_on(false);
+                    setProfile(d, profile_normal);
+                } else {
+                    d.setFlag_on(true);
+                    setProfile(d, profile_active);
+                }
+                d.postInvalidate();
             }
         }
     }
+
+    private int scopePosition(int in) {
+        int n1 = in >= mChildViews.size() ? mChildViews.size() - 1 : in;
+        return n1 < 0 ? 0 : n1;
+    }
+
+    public final void performClick(int position_in_list, boolean isShortClick) {
+        int pos = scopePosition(position_in_list);
+        if (mChildViews.get(pos) instanceof TagView) {
+            TagView d = (TagView) mChildViews.get(pos);
+            if (isShortClick) {
+                mOnTagClickListener.onTagClick(pos, d.getText());
+            } else {
+                mOnTagClickListener.onTagLongClick(pos, d.getText());
+            }
+        }
+        notifyInternal(pos);
+    }
+
+    public final void performFirstItemClick() {
+        performClick(0, true);
+    }
+
+    public final void performLastItemClick() {
+        performClick(mChildViews.size() - 1, true);
+    }
+
+    public final void performFirstItemLongClick() {
+        performClick(0, false);
+    }
+
+    public final void performLastItemLongClick() {
+        performClick(mChildViews.size() - 1, false);
+    }
+
 
     private void onRemoveTag(int position) {
         if (position < 0 || position >= mChildViews.size()) {
@@ -756,7 +792,7 @@ public class TagContainerLayout extends ViewGroup {
      *
      * @param enable enable to true
      */
-    public void setDragEnable(boolean enable) {
+    public final void setDragEnable(boolean enable) {
         this.mDragEnable = enable;
     }
 
@@ -765,7 +801,7 @@ public class TagContainerLayout extends ViewGroup {
      *
      * @return true or false
      */
-    public boolean getDragEnable() {
+    public final boolean getDragEnable() {
         return mDragEnable;
     }
 
@@ -774,7 +810,7 @@ public class TagContainerLayout extends ViewGroup {
      *
      * @param interval float for interval
      */
-    public void setVerticalInterval(float interval) {
+    public final void setVerticalInterval(float interval) {
         mVerticalInterval = (int) dp2px(getContext(), interval);
         postInvalidate();
     }
@@ -792,10 +828,12 @@ public class TagContainerLayout extends ViewGroup {
      * Set horizontal interval.
      *
      * @param interval width unit for horizontal
+     * @return TagContainerLayout
      */
-    public void setHorizontalInterval(float interval) {
+    public TagContainerLayout setHorizontalInterval(float interval) {
         mHorizontalInterval = (int) dp2px(getContext(), interval);
         postInvalidate();
+        return this;
     }
 
     /**
@@ -820,9 +858,11 @@ public class TagContainerLayout extends ViewGroup {
      * Set TagContainerLayout border width.
      *
      * @param width get the border of the width unit
+     * @return TagContainerLayout
      */
-    public void setBorderWidth(float width) {
+    public TagContainerLayout setBorderWidth(float width) {
         this.mBorderWidth = width;
+        return this;
     }
 
     /**
@@ -838,9 +878,11 @@ public class TagContainerLayout extends ViewGroup {
      * Set TagContainerLayout border radius.
      *
      * @param radius as it is
+     * @return TagContainerLayout
      */
-    public void setBorderRadius(float radius) {
+    public TagContainerLayout setBorderRadius(float radius) {
         this.mBorderRadius = radius;
+        return this;
     }
 
     /**
@@ -856,9 +898,11 @@ public class TagContainerLayout extends ViewGroup {
      * Set TagContainerLayout border color.
      *
      * @param color as it is
+     * @return TagContainerLayout
      */
-    public void setBorderColor(int color) {
+    public TagContainerLayout setBorderColor(int color) {
         this.mBorderColor = color;
+        return this;
     }
 
     /**
@@ -892,9 +936,11 @@ public class TagContainerLayout extends ViewGroup {
      * Set container layout gravity.
      *
      * @param gravity as it is
+     * @return TagContainerLayout
      */
-    public void setGravity(int gravity) {
+    public TagContainerLayout setGravity(int gravity) {
         this.mGravity = gravity;
+        return this;
     }
 
     /**
@@ -910,18 +956,43 @@ public class TagContainerLayout extends ViewGroup {
      * Set TagContainerLayout ViewDragHelper sensitivity.
      *
      * @param sensitivity as it is
+     * @return TagContainerLayout
      */
-    public void setSensitivity(float sensitivity) {
+    public TagContainerLayout setSensitivity(float sensitivity) {
         this.mSensitivity = sensitivity;
+        return this;
     }
+
 
     /**
      * Set the TagView text max length (must be more or big than 3).
      *
-     * @param maxLength the max length of the text inside each tagview
+     * @param maxLength the max length of the text inside each tagvie.
+     * @return TagContainerLayout
      */
-    public void setTagMaxLength(int maxLength) {
+    public TagContainerLayout setTagMaxLength(int maxLength) {
         mTagMaxLength = maxLength < TAG_MIN_LENGTH ? TAG_MIN_LENGTH : maxLength;
+        return this;
+    }
+
+    /**
+     * Set the application mode for this
+     *
+     * @param mode mode code
+     * @return TagContainerLayout
+     */
+    public final TagContainerLayout setMode(LayouMode mode) {
+        mMode = mode;
+        for (int i = 0; i < mChildViews.size(); i++) {
+            if (mChildViews.get(i) instanceof TagView) {
+                TagView d = (TagView) mChildViews.get(i);
+                d.setMode(mode);
+                if (mode == LayouMode.SINGLE_CHOICE || mode == LayouMode.MULTIPLE_CHOICE) {
+                    d.setIsViewClickable(true);
+                }
+            }
+        }
+        return this;
     }
 
     /**
