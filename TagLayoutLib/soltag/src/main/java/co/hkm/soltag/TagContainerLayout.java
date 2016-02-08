@@ -132,6 +132,10 @@ public class TagContainerLayout extends ViewGroup {
     private boolean isTagViewClickable;
 
     /**
+     * Preselected positions of the tag
+     */
+    private int[] mPreselectedTags;
+    /**
      * Tags
      */
     private List<String> mTags;
@@ -169,7 +173,7 @@ public class TagContainerLayout extends ViewGroup {
     private List<View> mChildViews;
 
     private int[] mViewPos;
-    private int[] profile_normal, profile_active;
+    private int[] profile_normal, profile_active, mThemeOnPreselected;
     private Context mConx;
     /**
      * View theme default PURE_CYAN)
@@ -433,16 +437,58 @@ public class TagContainerLayout extends ViewGroup {
         postInvalidate();
     }
 
+    private void processPreselectedOptions(int position, TagView tag, int[] target_theme, boolean flag) {
+        if (mMode == LayouMode.MULTIPLE_CHOICE || mMode == LayouMode.SINGLE_CHOICE) {
+            boolean apply_original = true;
+            if (mPreselectedTags != null && mThemeOnPreselected != null) {
+                for (int i = 0; i < mPreselectedTags.length; i++) {
+                    if (mPreselectedTags[i] == position && !flag) {
+                        setProfile(tag, mThemeOnPreselected);
+                        tag.setFlag_on(false);
+                        apply_original = false;
+                    }
+                }
+            }
+
+            if (apply_original) {
+                setProfile(tag, target_theme);
+                tag.setFlag_on(flag);
+            }
+
+        }
+    }
+
+    private void processPreselectedOptions(int position, TagView tag) {
+        if (mMode == LayouMode.MULTIPLE_CHOICE || mMode == LayouMode.SINGLE_CHOICE) {
+            if (mPreselectedTags != null) {
+                for (int i = 0; i < mPreselectedTags.length; i++) {
+                    if (mPreselectedTags[i] == position) {
+                        if (mThemeOnPreselected == null) {
+                            setProfile(tag, profile_active);
+                            tag.setFlag_on(true);
+                        } else {
+                            setProfile(tag, mThemeOnPreselected);
+                            tag.setFlag_on(false);
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
     private void onAddTag(String text, int position) {
         if (position < 0 || position > mChildViews.size()) {
             throw new RuntimeException("Illegal position!");
         }
         TagView tagView = new TagView(getContext(), text);
         initTagView(tagView);
+        processPreselectedOptions(position, tagView);
         mChildViews.add(position, tagView);
         if (position < mChildViews.size()) {
             for (int i = position; i < mChildViews.size(); i++) {
                 mChildViews.get(i).setTag(i);
+
             }
         } else {
             tagView.setTag(position);
@@ -485,29 +531,33 @@ public class TagContainerLayout extends ViewGroup {
         } else if (mMode == LayouMode.SINGLE_CHOICE) {
             for (int i = 0; i < mChildViews.size(); i++) {
                 if (mChildViews.get(i) instanceof TagView) {
-                    TagView d = (TagView) mChildViews.get(i);
+                    TagView tag = (TagView) mChildViews.get(i);
                     if (onNotePosition == i) {
-                        setProfile(d, profile_active);
-                        d.setFlag_on(true);
+                        setProfile(tag, profile_active);
+                        tag.setFlag_on(true);
                     } else {
-                        setProfile(d, profile_normal);
-                        d.setFlag_on(false);
+                        setProfile(tag, profile_normal);
+                        processPreselectedOptions(i, tag);
+                        tag.setFlag_on(false);
                     }
-                    d.postInvalidate();
+                    tag.postInvalidate();
                 }
             }
 
         } else if (mMode == LayouMode.MULTIPLE_CHOICE) {
             if (mChildViews.get(onNotePosition) instanceof TagView) {
-                TagView d = (TagView) mChildViews.get(onNotePosition);
-                if (d.isFlag_on()) {
-                    d.setFlag_on(false);
-                    setProfile(d, profile_normal);
+                TagView tag = (TagView) mChildViews.get(onNotePosition);
+                if (tag.isFlag_on()) {
+                    // setProfile(tag, profile_normal);
+                    processPreselectedOptions(notepos, tag, profile_normal, false);
                 } else {
-                    d.setFlag_on(true);
-                    setProfile(d, profile_active);
+                   // tag.setFlag_on(true);
+                    //   ..   processPreselectedOptions(notepos, tag, profile_active);
+                    //  setProfile(tag, profile_active);
+                    processPreselectedOptions(notepos, tag, profile_active, true);
+
                 }
-                d.postInvalidate();
+                tag.postInvalidate();
             }
         }
     }
@@ -992,6 +1042,17 @@ public class TagContainerLayout extends ViewGroup {
                 }
             }
         }
+        return this;
+    }
+
+    public final TagContainerLayout setPreselectedTags(int[] list) {
+        mPreselectedTags = list;
+        return this;
+    }
+
+    public final TagContainerLayout setPreselectedTags(int[] list, int theme_on_reselected) {
+        mPreselectedTags = list;
+        mThemeOnPreselected = onUpdateColorFactory(theme_on_reselected);
         return this;
     }
 

@@ -86,5 +86,17 @@ public class MainActivity extends AppCompatActivity {
                 .setMode(LayouMode.SINGLE_CHOICE)
                 .define(this)
                 .setTags(list5);
+
+        SampleCollections.PRESELECTED
+                .render(this)
+                .setMode(LayouMode.SINGLE_CHOICE)
+                .define(this)
+                .setTags(list2);
+
+        SampleCollections.MUTLIPLE_SELECTION_X_PRESELECTION
+                .render(this)
+                .setMode(LayouMode.MULTIPLE_CHOICE)
+                .define(this)
+                .setTags(list2);
     }
 }
