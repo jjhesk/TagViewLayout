@@ -188,7 +188,7 @@ mTagContainerLayout.removeAllTags();
 ## Change logs
 
 ## Sample App
-[APK](/sample/sample-release.apk)
+[APK][1]
 
 ##Screenshots
 ![IMEF](baconLMY48Yhesk02012016174101.gif)
@@ -208,3 +208,4 @@ mTagContainerLayout.removeAllTags();
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations
+[1]: https://github.com/jjhesk/TagViewLayout/releases/download/1.3.0/sample-release.apk
