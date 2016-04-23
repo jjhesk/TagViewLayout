@@ -15,7 +15,7 @@ Add below dependency in your **build.gradle** file.
 
 ```gradle
 dependencies {
-    compile 'com.hkm.taglib:tag:1.0.2'
+    compile 'com.hkm.taglib:tag:1.4.0'
 }
 ```
 
@@ -33,6 +33,7 @@ Use the AndroidTagView in layout file, you can add customized attributes here.
     app:horizontal_interval="10dp"
     app:vertical_interval="10dp"
     app:tag_clickable="true"
+    app:tag_fontface="fontname.ttf"
     app:tag_theme="pure_teal" />
 ```
 
@@ -73,6 +74,7 @@ Now, you have successfully created some TagViews. The following will show some m
 | tag_clickable | boolean | Whether TagView can clickable(default unclickable)
 | tag_theme | enum | The TagView [theme](#themes)
 | tag_text_direction | enum | The TagView text [direction](#directions)
+| tag_fontface | string | the custom font face name where is file is located at 'Assets/fonts/' folder.
 
 **You can set these attributes in layout file, or use setters(each attribute has get and set method) to set them.**
 
@@ -147,10 +149,10 @@ mTagContainerLayout.setTagBackgroundColor(Color.TRANSPARENT);
 ```java
 mTagContainerLayout.setTagTextDirection(View.TEXT_DIRECTION_RTL);
 ```
-* Use ```setTagTypeface(Typeface typeface)``` to set TagView text typeface.
+* Use ```setTagTypeface(String typefacename)``` to set TagView text typeface. Please make sure your custom font file is located at the 'fonts' folder
 ```java
-Typeface typeface = Typeface.createFromAsset(getAssets(), "iran_sans.ttf");
-mTagContainerLayout.setTagTypeface(typeface);
+mTagContainerLayout.setTagTypeface("iran_sans.ttf);
+
 ```
 
 **After set the attributes, set tags or add a tag.**

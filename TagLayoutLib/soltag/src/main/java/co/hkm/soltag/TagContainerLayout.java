@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -247,6 +248,9 @@ public class TagContainerLayout extends ViewGroup {
         mTagTextColor = attributes.getColor(R.styleable.AndroidTagView_tag_text_color, mTagTextColor);
         mTagTextDirection = attributes.getInt(R.styleable.AndroidTagView_tag_text_direction, mTagTextDirection);
         isTagViewClickable = attributes.getBoolean(R.styleable.AndroidTagView_tag_clickable, false);
+
+        String font_name = attributes.getString(R.styleable.AndroidTagView_tag_fontface);
+        mTagTypeface = helper.getTypface(font_name, context);
         attributes.recycle();
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -371,6 +375,29 @@ public class TagContainerLayout extends ViewGroup {
         mPaint.setColor(mBorderColor);
         canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
     }
+
+    public static class Builder {
+        private int
+                ic_company, ic_search, ic_back, ic_background,
+                tb_textsize = 0, tb_title_color = 0, title_line_config = 1,
+                animation_duration_logo = -1,
+                animation_duration = -1;
+        private Typeface typeface;
+        private String title_default;
+        private boolean enable_logo_anim = true;
+        private boolean save_title_navigation = false;
+
+        public Builder() {
+
+        }
+
+        public Builder setFontFace(@NonNull Context mContext, @NonNull final String fontNameInFontFolder) {
+            typeface = helper.getTypface(fontNameInFontFolder, mContext);
+            return this;
+        }
+
+    }
+
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -551,7 +578,7 @@ public class TagContainerLayout extends ViewGroup {
                     // setProfile(tag, profile_normal);
                     processPreselectedOptions(notepos, tag, profile_normal, false);
                 } else {
-                   // tag.setFlag_on(true);
+                    // tag.setFlag_on(true);
                     //   ..   processPreselectedOptions(notepos, tag, profile_active);
                     //  setProfile(tag, profile_active);
                     processPreselectedOptions(notepos, tag, profile_active, true);
@@ -1273,8 +1300,8 @@ public class TagContainerLayout extends ViewGroup {
      *
      * @param typeface as it is
      */
-    public void setTagTypeface(Typeface typeface) {
-        this.mTagTypeface = typeface;
+    public void setTagTypeface(String typeface) {
+        this.mTagTypeface = helper.getTypface(typeface, mConx);
     }
 
     /**

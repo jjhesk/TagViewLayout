@@ -72,8 +72,7 @@ public enum SampleCollections {
     }, COUNTRY_LIST(R.id.tagcontainerLayout2) {
         @Override
         protected TagContainerLayout define(final Activity act) {
-            Typeface typeface = Typeface.createFromAsset(act.getAssets(), "iran_sans.ttf");
-            container.setTagTypeface(typeface);
+            container.setTagTypeface("iran_sans.ttf");
             return container;
         }
     }, SPECIAL_TEXT(R.id.tagcontainerLayout3) {
