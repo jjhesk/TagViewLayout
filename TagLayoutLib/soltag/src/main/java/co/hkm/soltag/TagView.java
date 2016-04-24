@@ -115,7 +115,7 @@ public class TagView extends View {
     private Typeface mTypeface;
 
     private LayouMode mMode;
-    private TagContainerLayout mNofication;
+    private TagContainerLayout mNotification;
 
 
     private boolean flag_on;
@@ -127,7 +127,7 @@ public class TagView extends View {
                 int state = ((TagContainerLayout) getParent()).getTagViewState();
                 if (state == ViewDragHelper.STATE_IDLE) {
                     isExecLongClick = true;
-                    mOnTagClickListener.onTagLongClick((int) getTag(), getText());
+                    mOnTagClickListener.onTagLongClick(getPosition(), getText());
                 }
             }
         }
@@ -146,7 +146,7 @@ public class TagView extends View {
     }
 
     public void setNotification(TagContainerLayout ly) {
-        mNofication = ly;
+        mNotification = ly;
     }
 
     private void onDealText() {
@@ -174,8 +174,7 @@ public class TagView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(mHorizontalPadding * 2 + (int) fontW,
-                mVerticalPadding * 2 + (int) fontH);
+        setMeasuredDimension(mHorizontalPadding * 2 + (int) fontW, mVerticalPadding * 2 + (int) fontH);
     }
 
     @Override
@@ -269,14 +268,14 @@ public class TagView extends View {
                 case MotionEvent.ACTION_UP:
                     isUp = true;
                 /*    if (!isExecLongClick && !isMoved) {
-                        mNofication.notifyInternal((int) getTag());
+                        mNotification.notifyInternal((int) getTag());
                         mOnTagClickListener.onTagClick((int) getTag(), getText());
                     }*/
                     h = new Date();
                     if (!isMoved) {
                         if (h.getTime() - register_down_time < mLongPressTime) {
-                            mNofication.notifyInternal((int) getTag());
-                            mOnTagClickListener.onTagClick((int) getTag(), getText());
+                            mNotification.notifyInternal(getPosition());
+                            mOnTagClickListener.onTagClick(getPosition(), getText());
                         }
                     }
 
@@ -300,8 +299,25 @@ public class TagView extends View {
         onDealText();
     }
 
+    private int getPosition() {
+        return (int) getTag();
+    }
+
     public void setOnTagClickListener(OnTagClickListener listener) {
         this.mOnTagClickListener = listener;
+      /*  setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mOnTagClickListener.onTagLongClick(getPosition(), getText());
+                return false;
+            }
+        });
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnTagClickListener.onTagClick(getPosition(), getText());
+            }
+        });*/
     }
 
     public void setTagBackgroundColor(int color) {
