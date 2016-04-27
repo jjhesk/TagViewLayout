@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
@@ -131,7 +133,10 @@ public class TagContainerLayout extends ViewGroup {
      * Whether TagView can clickable(default unclickable)
      */
     private boolean isTagViewClickable;
-
+    /**
+     * for alternative selecting drawable
+     */
+    private StateListDrawable itemDrawable;
     /**
      * Preselected positions of the tag
      */
@@ -248,7 +253,10 @@ public class TagContainerLayout extends ViewGroup {
         mTagTextColor = attributes.getColor(R.styleable.AndroidTagView_tag_text_color, mTagTextColor);
         mTagTextDirection = attributes.getInt(R.styleable.AndroidTagView_tag_text_direction, mTagTextDirection);
         isTagViewClickable = attributes.getBoolean(R.styleable.AndroidTagView_tag_clickable, false);
-
+        Drawable dr = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable);
+        if (dr != null && dr instanceof StateListDrawable) {
+            itemDrawable = (StateListDrawable) dr;
+        }
         String font_name = attributes.getString(R.styleable.AndroidTagView_tag_fontface);
         mTagTypeface = helper.getTypface(font_name, context);
         attributes.recycle();
@@ -470,7 +478,7 @@ public class TagContainerLayout extends ViewGroup {
             if (mPreselectedTags != null && mThemeOnPreselected != null) {
                 for (int i = 0; i < mPreselectedTags.length; i++) {
                     if (mPreselectedTags[i] == position && !flag) {
-                        setProfile(tag, mThemeOnPreselected);
+                        tag.applyProfile(mThemeOnPreselected);
                         tag.setFlag_on(false);
                         apply_original = false;
                     }
@@ -478,7 +486,7 @@ public class TagContainerLayout extends ViewGroup {
             }
 
             if (apply_original) {
-                setProfile(tag, target_theme);
+                tag.applyProfile(target_theme);
                 tag.setFlag_on(flag);
             }
 
@@ -491,10 +499,10 @@ public class TagContainerLayout extends ViewGroup {
                 for (int i = 0; i < mPreselectedTags.length; i++) {
                     if (mPreselectedTags[i] == position) {
                         if (mThemeOnPreselected == null) {
-                            setProfile(tag, profile_active);
+                            tag.applyProfile(profile_active);
                             tag.setFlag_on(true);
                         } else {
-                            setProfile(tag, mThemeOnPreselected);
+                            tag.applyProfile(mThemeOnPreselected);
                             tag.setFlag_on(false);
                         }
                     }
@@ -524,7 +532,7 @@ public class TagContainerLayout extends ViewGroup {
     }
 
     private void initTagView(TagView tagView) {
-        setProfile(tagView, onUpdateColorFactory(mTheme));
+        tagView.applyProfile(onUpdateColorFactory(mTheme));
         tagView.setTagMaxLength(mTagMaxLength);
         tagView.setTextDirection(mTagTextDirection);
         tagView.setTypeface(mTagTypeface);
@@ -538,12 +546,9 @@ public class TagContainerLayout extends ViewGroup {
         tagView.setOnTagClickListener(mOnTagClickListener);
         tagView.setMode(mMode);
         tagView.setNotification(this);
-    }
-
-    private void setProfile(TagView tagView, int[] profile) {
-        tagView.setTagBackgroundColor(profile[1]);
-        tagView.setTagBorderColor(profile[0]);
-        tagView.setTagTextColor(profile[2]);
+        if(itemDrawable!=null){
+            tagView.setItemDrawable(itemDrawable);
+        }
     }
 
     /**
@@ -560,10 +565,10 @@ public class TagContainerLayout extends ViewGroup {
                 if (mChildViews.get(i) instanceof TagView) {
                     TagView tag = (TagView) mChildViews.get(i);
                     if (onNotePosition == i) {
-                        setProfile(tag, profile_active);
+                        tag.applyProfile(profile_active);
                         tag.setFlag_on(true);
                     } else {
-                        setProfile(tag, profile_normal);
+                        tag.applyProfile(profile_normal);
                         processPreselectedOptions(i, tag);
                         tag.setFlag_on(false);
                     }
@@ -1330,5 +1335,31 @@ public class TagContainerLayout extends ViewGroup {
     public float sp2px(Context context, float sp) {
         final float scale = context.getResources().getDisplayMetrics().scaledDensity;
         return sp * scale;
+    }
+
+    public ArrayList<String> getSelectedItems() {
+        ArrayList<String> lit = new ArrayList<>();
+        for (int i = 0; i < mChildViews.size(); i++) {
+            if (mChildViews.get(i) instanceof TagView) {
+                TagView d = (TagView) mChildViews.get(i);
+                if (d.isFlag_on()) {
+                    lit.add(d.getText());
+                }
+            }
+        }
+        return lit;
+    }
+
+    public ArrayList<Integer> getSelectedOrders() {
+        ArrayList<Integer> lit = new ArrayList<>();
+        for (int i = 0; i < mChildViews.size(); i++) {
+            if (mChildViews.get(i) instanceof TagView) {
+                TagView d = (TagView) mChildViews.get(i);
+                if (d.isFlag_on()) {
+                    lit.add(i);
+                }
+            }
+        }
+        return lit;
     }
 }

@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.support.v4.widget.ViewDragHelper;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -117,7 +119,7 @@ public class TagView extends View {
     private LayouMode mMode;
     private TagContainerLayout mNotification;
 
-
+    private boolean useDrawable = false;
     private boolean flag_on;
 
     private Runnable mLongClickHandle = new Runnable() {
@@ -147,6 +149,13 @@ public class TagView extends View {
 
     public void setNotification(TagContainerLayout ly) {
         mNotification = ly;
+    }
+
+    public void setItemDrawable(StateListDrawable d) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            setBackground(d);
+            useDrawable = true;
+        }
     }
 
     private void onDealText() {
@@ -351,6 +360,25 @@ public class TagView extends View {
 
     public void setFlag_on(boolean flag_on) {
         this.flag_on = flag_on;
+        if (!useDrawable) return;
+        if (flag_on) {
+            setSelected(true);
+        } else {
+            setSelected(false);
+        }
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        super.setSelected(selected);
+        flag_on = selected;
+    }
+
+    public void applyProfile(int[] profile) {
+        if (useDrawable) return;
+        setTagBackgroundColor(profile[1]);
+        setTagBorderColor(profile[0]);
+        setTagTextColor(profile[2]);
     }
 
     public void setMode(LayouMode mode) {

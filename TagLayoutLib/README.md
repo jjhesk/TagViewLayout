@@ -15,7 +15,7 @@ Add below dependency in your **build.gradle** file.
 
 ```gradle
 dependencies {
-    compile 'com.hkm.taglib:tag:1.4.0'
+    compile 'com.hkm.taglib:tag:1.4.5'
 }
 ```
 
@@ -73,6 +73,7 @@ Now, you have successfully created some TagViews. The following will show some m
 | tag_max_length | integer | The max length for TagView(default max length 23)
 | tag_clickable | boolean | Whether TagView can clickable(default unclickable)
 | tag_theme | enum | The TagView [theme](#themes)
+| tag_drawable | drawable | The list item drawable for selection
 | tag_text_direction | enum | The TagView text [direction](#directions)
 | tag_fontface | string | the custom font face name where is file is located at 'Assets/fonts/' folder.
 
