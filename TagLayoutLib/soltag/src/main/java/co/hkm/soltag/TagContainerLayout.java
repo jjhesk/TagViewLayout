@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -136,7 +137,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * for alternative selecting drawable
      */
-    private StateListDrawable itemDrawable;
+    private Drawable itemDrawable;
     /**
      * Preselected positions of the tag
      */
@@ -254,8 +255,9 @@ public class TagContainerLayout extends ViewGroup {
         mTagTextDirection = attributes.getInt(R.styleable.AndroidTagView_tag_text_direction, mTagTextDirection);
         isTagViewClickable = attributes.getBoolean(R.styleable.AndroidTagView_tag_clickable, false);
         Drawable dr = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable);
-        if (dr != null && dr instanceof StateListDrawable) {
-            itemDrawable = (StateListDrawable) dr;
+        if (dr != null) {
+            //Drawable l = ContextCompat.getDrawable(mConx, dr);
+            itemDrawable = dr;
         }
         String font_name = attributes.getString(R.styleable.AndroidTagView_tag_fontface);
         mTagTypeface = helper.getTypface(font_name, context);
@@ -374,6 +376,7 @@ public class TagContainerLayout extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mBackgroundColor);
         canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
@@ -382,6 +385,7 @@ public class TagContainerLayout extends ViewGroup {
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setColor(mBorderColor);
         canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
+
     }
 
     public static class Builder {
@@ -546,7 +550,7 @@ public class TagContainerLayout extends ViewGroup {
         tagView.setOnTagClickListener(mOnTagClickListener);
         tagView.setMode(mMode);
         tagView.setNotification(this);
-        if(itemDrawable!=null){
+        if (itemDrawable != null) {
             tagView.setItemDrawable(itemDrawable);
         }
     }

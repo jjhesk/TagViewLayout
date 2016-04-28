@@ -246,6 +246,50 @@ public enum SampleCollections {
 
             return container;
         }
+    } ,
+
+    SPEAICAL_DRAWABLE_SELECTION_ITEM(R.id.drawble_selection){
+        @Override
+        protected TagContainerLayout define(final Activity act) {
+            container.setThemeOnActive(R.style.tagactive_big);
+            container.setTheme(R.style.tagnormal_big);
+
+            container.setPreselectedTags(new int[]{
+                    1, 3, 5, 7
+            }, R.style.tagnormal_preactive);
+            container.setMode(setupModeCode);
+            container.setOnTagClickListener(new TagView.OnTagClickListener() {
+                @Override
+                public void onTagClick(int position, String text) {
+                    Toast.makeText(act, "click-position:" + position + ", text:" + text,
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onTagLongClick(final int position, String text) {
+                    AlertDialog dialog = new AlertDialog.Builder(act)
+                            .setTitle("long click")
+                            .setMessage("You will delete this tag!")
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    container.removeTag(position);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create();
+                    dialog.show();
+                }
+            });
+
+            return container;
+        }
+
     }
 
     ;

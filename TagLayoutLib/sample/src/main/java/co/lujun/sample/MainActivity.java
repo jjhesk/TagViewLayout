@@ -3,10 +3,15 @@ package co.lujun.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import co.hkm.soltag.TagContainerLayout;
 import co.hkm.soltag.ext.LayouMode;
 
 
@@ -31,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         list1.add("Html");
         list1.add("Welcome to use AndroidTagView!");
 
-        List<String> list2 = new ArrayList<String>();
+        ArrayList<String> list2 = new ArrayList<String>();
         list2.add("China");
         list2.add("USA");
         list2.add("Austria");
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         list2.add("Brazil");
 
 
-        List<String> list5 = new ArrayList<String>();
+        ArrayList<String> list5 = new ArrayList<String>();
         list5.add("M");
         list5.add("K");
         list5.add("US10");
@@ -98,5 +103,26 @@ public class MainActivity extends AppCompatActivity {
                 .setMode(LayouMode.MULTIPLE_CHOICE)
                 .define(this)
                 .setTags(list2);
+
+
+        knif.addAmount(19, list2);
+
+        final TagContainerLayout cont = SampleCollections.SPEAICAL_DRAWABLE_SELECTION_ITEM
+                .render(this)
+                .setMode(LayouMode.MULTIPLE_CHOICE)
+                .define(this);
+
+        cont.setTags(knif.toTag(list2));
+        Button b = (Button) findViewById(R.id.showall);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String casstring = "You have selected %s items";
+                Toast.makeText(MainActivity.this, String.format(casstring, cont.getSelectedItems().size()),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 }

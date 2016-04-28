@@ -5,8 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.support.v4.widget.ViewDragHelper;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -151,8 +153,9 @@ public class TagView extends View {
         mNotification = ly;
     }
 
-    public void setItemDrawable(StateListDrawable d) {
+    public void setItemDrawable(Drawable d) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            //setBackgroundResource(d);
             setBackground(d);
             useDrawable = true;
         }
@@ -194,14 +197,16 @@ public class TagView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(mBackgroundColor);
-        canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
+        if (!useDrawable) {
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(mBackgroundColor);
+            canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
 
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(mBorderWidth);
-        mPaint.setColor(mBorderColor);
-        canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(mBorderWidth);
+            mPaint.setColor(mBorderColor);
+            canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
+        }
 
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mTextColor);
@@ -314,19 +319,6 @@ public class TagView extends View {
 
     public void setOnTagClickListener(OnTagClickListener listener) {
         this.mOnTagClickListener = listener;
-      /*  setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mOnTagClickListener.onTagLongClick(getPosition(), getText());
-                return false;
-            }
-        });
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnTagClickListener.onTagClick(getPosition(), getText());
-            }
-        });*/
     }
 
     public void setTagBackgroundColor(int color) {
@@ -360,11 +352,12 @@ public class TagView extends View {
 
     public void setFlag_on(boolean flag_on) {
         this.flag_on = flag_on;
-        if (!useDrawable) return;
-        if (flag_on) {
-            setSelected(true);
-        } else {
-            setSelected(false);
+        if (useDrawable) {
+            if (flag_on) {
+                setSelected(true);
+            } else {
+                setSelected(false);
+            }
         }
     }
 
@@ -375,10 +368,10 @@ public class TagView extends View {
     }
 
     public void applyProfile(int[] profile) {
+        setTagTextColor(profile[2]);
         if (useDrawable) return;
         setTagBackgroundColor(profile[1]);
         setTagBorderColor(profile[0]);
-        setTagTextColor(profile[2]);
     }
 
     public void setMode(LayouMode mode) {

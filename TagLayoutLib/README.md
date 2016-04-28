@@ -37,6 +37,8 @@ Use the AndroidTagView in layout file, you can add customized attributes here.
     app:tag_theme="pure_teal" />
 ```
 
+![multiple selection](http://i.giphy.com/i9TJUQjCeViM0.gif)
+![drawable support](http://i.giphy.com/a1T4BD9QKuy1a.gif)
 ### Step 3
 
 Use TagView in your code.

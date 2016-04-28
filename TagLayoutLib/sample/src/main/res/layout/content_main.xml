@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="co.hkm.sample.MainActivity"
+    tools:context="co.lujun.sample.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <ScrollView
@@ -166,7 +166,6 @@
                 app:vertical_interval="10dp" />
 
 
-
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/pre_x_multi_interact"
                 android:layout_width="match_parent"
@@ -189,6 +188,31 @@
                 app:tag_vertical_padding="@dimen/mid_margin"
                 app:vertical_interval="10dp" />
 
+
+            <co.hkm.soltag.TagContainerLayout
+                android:id="@+id/drawble_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:container_background_color="#00000000"
+                app:container_border_color="#33666666"
+                app:container_border_radius="0dp"
+                app:container_gravity="left"
+                app:horizontal_interval="10dp"
+                app:tag_clickable="true"
+                app:tag_drawable="@drawable/combo_button_sal"
+                app:tag_horizontal_padding="@dimen/mid_margin"
+                app:tag_max_length="15"
+                app:tag_text_direction="rtl"
+                app:tag_text_size="14sp"
+                app:tag_vertical_padding="@dimen/mid_margin"
+                app:vertical_interval="10dp" />
+
+            <Button
+                android:id="@+id/showall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="show all" />
         </LinearLayout>
 
     </ScrollView>
