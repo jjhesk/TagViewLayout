@@ -191,7 +191,7 @@ mTagContainerLayout.removeAllTags();
 [APK][1]
 
 ##Screenshots
-![IMEF](baconLMY48Yhesk02012016174101.gif)
+![IMEF](http://i.giphy.com/2Yk9ek8Qafgl2.gif)
 
 ## License
 
