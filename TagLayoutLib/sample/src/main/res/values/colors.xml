@@ -9,4 +9,10 @@
     <color name="colorwhite_04">#e5f2ff</color>
     <color name="colorwhite_03">#409af4</color>
     <color name="colorwhite_05">#113f6c</color>
+
+    <color name="azulBrillante">#fde0dc</color>
+    <color name="azulado">#ffb2a7</color>
+    <color name="blanco">#6c3932</color>
+    <color name="botonesD">#ba5e51</color>
+    <color name="botones">#e77a6b</color>
 </resources>
