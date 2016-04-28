@@ -5,7 +5,7 @@ An Android TagView library. You can customize awesome TagView by using this libr
 
 ## Screenshots
 
-
+![smart tags](http://i.giphy.com/2Yk9ek8Qafgl2.gif)
 
 ## Usage
 
