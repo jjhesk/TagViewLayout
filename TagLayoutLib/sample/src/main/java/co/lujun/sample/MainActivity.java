@@ -102,17 +102,17 @@ public class MainActivity extends AppCompatActivity {
                 .render(this)
                 .setMode(LayouMode.MULTIPLE_CHOICE)
                 .define(this)
-                .setTags(list2);
+                .setTags(list5);
 
 
-        knif.addAmount(19, list2);
+        knif.addAmount(19, list5);
 
         final TagContainerLayout cont = SampleCollections.SPEAICAL_DRAWABLE_SELECTION_ITEM
                 .render(this)
                 .setMode(LayouMode.MULTIPLE_CHOICE)
                 .define(this);
 
-        cont.setTags(knif.toTag(list2));
+        cont.setTags(knif.toTag(list5));
         Button b = (Button) findViewById(R.id.showall);
         b.setOnClickListener(new View.OnClickListener() {
             @Override

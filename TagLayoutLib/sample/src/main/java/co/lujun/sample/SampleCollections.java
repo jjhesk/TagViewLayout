@@ -261,8 +261,8 @@ public enum SampleCollections {
             container.setOnTagClickListener(new TagView.OnTagClickListener() {
                 @Override
                 public void onTagClick(int position, String text) {
-                    Toast.makeText(act, "click-position:" + position + ", text:" + text,
-                            Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(act, "click-position:" + position + ", text:" + text,
+                    //        Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

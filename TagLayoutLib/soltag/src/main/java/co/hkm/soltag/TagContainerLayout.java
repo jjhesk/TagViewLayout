@@ -376,7 +376,6 @@ public class TagContainerLayout extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mBackgroundColor);
         canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
@@ -385,7 +384,6 @@ public class TagContainerLayout extends ViewGroup {
         mPaint.setStrokeWidth(mBorderWidth);
         mPaint.setColor(mBorderColor);
         canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
-
     }
 
     public static class Builder {
@@ -456,9 +454,9 @@ public class TagContainerLayout extends ViewGroup {
         } else if (import_theme == ColorFactory.PURE_CYAN) {
             colors = ColorFactory.onPureBuild(ColorFactory.PURE_COLOR.CYAN);
         } else {
-            ColorFactory f = new ColorFactory(import_theme, mConx);
-            if (f.isUsingStylable()) {
-                colors = f.getConfig();
+            ColorFactory cf = new ColorFactory(import_theme, mConx);
+            if (cf.isUsingStylable()) {
+                colors = cf.getConfig();
             } else {
                 colors = new int[]{mTagBackgroundColor, mTagBorderColor, mTagTextColor};
             }
@@ -488,12 +486,10 @@ public class TagContainerLayout extends ViewGroup {
                     }
                 }
             }
-
             if (apply_original) {
                 tag.applyProfile(target_theme);
                 tag.setFlag_on(flag);
             }
-
         }
     }
 
@@ -512,7 +508,6 @@ public class TagContainerLayout extends ViewGroup {
                     }
                 }
             }
-
         }
     }
 
@@ -522,16 +517,17 @@ public class TagContainerLayout extends ViewGroup {
         }
         TagView tagView = new TagView(getContext(), text);
         initTagView(tagView);
-        processPreselectedOptions(position, tagView);
+
         mChildViews.add(position, tagView);
         if (position < mChildViews.size()) {
             for (int i = position; i < mChildViews.size(); i++) {
                 mChildViews.get(i).setTag(i);
-
             }
         } else {
             tagView.setTag(position);
         }
+
+        processPreselectedOptions(position, tagView);
         addView(tagView, position);
     }
 
@@ -579,7 +575,6 @@ public class TagContainerLayout extends ViewGroup {
                     tag.postInvalidate();
                 }
             }
-
         } else if (mMode == LayouMode.MULTIPLE_CHOICE) {
             if (mChildViews.get(onNotePosition) instanceof TagView) {
                 TagView tag = (TagView) mChildViews.get(onNotePosition);
@@ -591,7 +586,6 @@ public class TagContainerLayout extends ViewGroup {
                     //   ..   processPreselectedOptions(notepos, tag, profile_active);
                     //  setProfile(tag, profile_active);
                     processPreselectedOptions(notepos, tag, profile_active, true);
-
                 }
                 tag.postInvalidate();
             }
@@ -606,11 +600,11 @@ public class TagContainerLayout extends ViewGroup {
     public final void performClick(int position_in_list, boolean isShortClick) {
         int pos = scopePosition(position_in_list);
         if (mChildViews.get(pos) instanceof TagView) {
-            TagView d = (TagView) mChildViews.get(pos);
+            TagView cf = (TagView) mChildViews.get(pos);
             if (isShortClick) {
-                mOnTagClickListener.onTagClick(pos, d.getText());
+                mOnTagClickListener.onTagClick(pos, cf.getText());
             } else {
-                mOnTagClickListener.onTagLongClick(pos, d.getText());
+                mOnTagClickListener.onTagLongClick(pos, cf.getText());
             }
         }
         notifyInternal(pos);
@@ -692,7 +686,6 @@ public class TagContainerLayout extends ViewGroup {
         for (View child : mChildViews) {
             child.setTag(mChildViews.indexOf(child));
         }
-
         removeViewAt(originPos);
         addView(view, newPos);
     }

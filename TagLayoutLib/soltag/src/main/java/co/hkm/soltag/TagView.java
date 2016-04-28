@@ -155,7 +155,6 @@ public class TagView extends View {
 
     public void setItemDrawable(Drawable d) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            //setBackgroundResource(d);
             setBackground(d);
             useDrawable = true;
         }
@@ -350,21 +349,11 @@ public class TagView extends View {
         return flag_on;
     }
 
-    public void setFlag_on(boolean flag_on) {
-        this.flag_on = flag_on;
+    public void setFlag_on(boolean b) {
         if (useDrawable) {
-            if (flag_on) {
-                setSelected(true);
-            } else {
-                setSelected(false);
-            }
+            setSelected(b);
         }
-    }
-
-    @Override
-    public void setSelected(boolean selected) {
-        super.setSelected(selected);
-        flag_on = selected;
+        this.flag_on = b;
     }
 
     public void applyProfile(int[] profile) {

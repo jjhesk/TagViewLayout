@@ -6,14 +6,11 @@ android {
 
     defaultConfig {
         applicationId "co.lujun.sample"
-
-
         versionCode 1
         versionName "1.0"
 
         minSdkVersion project.ANDROID_BUILD_MIN_SDK_VERSION as int
         targetSdkVersion project.ANDROID_BUILD_TARGET_SDK_VERSION as int
-
     }
     buildTypes {
         release {
