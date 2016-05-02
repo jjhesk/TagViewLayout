@@ -8,9 +8,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -479,9 +477,13 @@ public class TagContainerLayout extends ViewGroup {
             boolean apply_original = true;
             if (mPreselectedTags != null && mThemeOnPreselected != null) {
                 for (int i = 0; i < mPreselectedTags.length; i++) {
-                    if (mPreselectedTags[i] == position && !flag) {
-                        tag.applyProfile(mThemeOnPreselected);
-                        tag.setFlag_on(false);
+                    if (mPreselectedTags[i] == position) {
+                        if (flag) {
+                            tag.applyProfile(mThemeOnPreselected);
+                        } else {
+                            tag.applyProfile(target_theme);
+                        }
+                        tag.setFlag_on(flag);
                         apply_original = false;
                     }
                 }
