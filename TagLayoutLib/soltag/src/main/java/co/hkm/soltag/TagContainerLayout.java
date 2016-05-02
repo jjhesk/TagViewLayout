@@ -495,19 +495,13 @@ public class TagContainerLayout extends ViewGroup {
         }
     }
 
-    private void processPreselectedOptions(int position, TagView tag) {
+    private void processPreselectedRender(int position, TagView tag) {
         if (mMode == LayouMode.MULTIPLE_CHOICE || mMode == LayouMode.SINGLE_CHOICE) {
-            if (mPreselectedTags != null) {
-                for (int i = 0; i < mPreselectedTags.length; i++) {
-                    if (mPreselectedTags[i] == position) {
-                        if (mThemeOnPreselected == null) {
-                            tag.applyProfile(profile_active);
-                            tag.setFlag_on(true);
-                        } else {
-                            tag.applyProfile(mThemeOnPreselected);
-                            tag.setFlag_on(false);
-                        }
-                    }
+            if (mPreselectedTags == null) return;
+            for (int i = 0; i < mPreselectedTags.length; i++) {
+                if (mPreselectedTags[i] == position) {
+                    tag.setFlag_on(true);
+                    tag.applyProfile(mThemeOnPreselected == null ? profile_active : mThemeOnPreselected);
                 }
             }
         }
@@ -529,7 +523,7 @@ public class TagContainerLayout extends ViewGroup {
             tagView.setTag(position);
         }
 
-        processPreselectedOptions(position, tagView);
+        processPreselectedRender(position, tagView);
         addView(tagView, position);
     }
 
@@ -553,6 +547,18 @@ public class TagContainerLayout extends ViewGroup {
         }
     }
 
+    private void processPreselectedOptionsOff(final int position, TagView tag) {
+        if (mPreselectedTags == null) return;
+        for (int i = 0; i < mPreselectedTags.length; i++) {
+            if (mPreselectedTags[i] == position) {
+                tag.applyProfile(mThemeOnPreselected == null ? profile_normal : mThemeOnPreselected);
+            } else {
+                tag.applyProfile(profile_normal);
+            }
+        }
+        tag.setFlag_on(false);
+    }
+
     /**
      * only communicate from the TagView
      *
@@ -570,9 +576,22 @@ public class TagContainerLayout extends ViewGroup {
                         tag.applyProfile(profile_active);
                         tag.setFlag_on(true);
                     } else {
-                        tag.applyProfile(profile_normal);
-                        processPreselectedOptions(i, tag);
                         tag.setFlag_on(false);
+                        tag.applyProfile(profile_normal);
+                        // processPreselectedOptionsOff(i, tag);
+                    }
+                    tag.postInvalidate();
+                }
+            }
+        } else if (mMode == LayouMode.SINGLE_CHOICE_OVERLAY_PRESET) {
+            for (int i = 0; i < mChildViews.size(); i++) {
+                if (mChildViews.get(i) instanceof TagView) {
+                    TagView tag = (TagView) mChildViews.get(i);
+                    if (onNotePosition == i) {
+                        tag.applyProfile(profile_active);
+                        tag.setFlag_on(true);
+                    } else {
+                        processPreselectedOptionsOff(i, tag);
                     }
                     tag.postInvalidate();
                 }

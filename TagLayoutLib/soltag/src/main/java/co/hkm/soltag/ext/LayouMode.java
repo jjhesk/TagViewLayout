@@ -6,5 +6,6 @@ package co.hkm.soltag.ext;
 public enum LayouMode {
     DEFAULT,
     SINGLE_CHOICE,
+    SINGLE_CHOICE_OVERLAY_PRESET,
     MULTIPLE_CHOICE
 }
