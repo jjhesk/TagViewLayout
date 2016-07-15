@@ -1,11 +1,5 @@
 # AndroidTagView
-
-
 An Android TagView library. You can customize awesome TagView by using this library.
-
-## Screenshots
-
-![smart tags](http://i.giphy.com/2Yk9ek8Qafgl2.gif)
 
 ## Usage
 
@@ -15,7 +9,7 @@ Add below dependency in your **build.gradle** file.
 
 ```gradle
 dependencies {
-    compile 'com.hkm.taglib:tag:1.4.5'
+    compile 'com.hkm.taglib:tag:1.6.0'
 }
 ```
 
@@ -32,7 +26,6 @@ Use the AndroidTagView in layout file, you can add customized attributes here.
     app:container_enable_drag="false"
     app:horizontal_interval="10dp"
     app:vertical_interval="10dp"
-    app:tag_clickable="true"
     app:tag_fontface="fontname.ttf"
     app:tag_theme="pure_teal" />
 ```
@@ -73,11 +66,13 @@ Now, you have successfully created some TagViews. The following will show some m
 | tag_border_color | color | TagView border color(default #88F44336)
 | tag_background_color | color | TagView background color(default #33F44336)
 | tag_max_length | integer | The max length for TagView(default max length 23)
-| tag_clickable | boolean | Whether TagView can clickable(default unclickable)
 | tag_theme | enum | The TagView [theme](#themes)
 | tag_drawable | drawable | The list item drawable for selection
 | tag_text_direction | enum | The TagView text [direction](#directions)
 | tag_fontface | string | the custom font face name where is file is located at 'Assets/fonts/' folder.
+| tag_drawable_state0 | drawable | The default state of the drawable from the resource folder
+| tag_drawable_state1 | drawable | The active state of the drawable form the resource folder
+| tag_drawable_state2 | drawable | The preselected state of the drawable form the resource folder
 
 **You can set these attributes in layout file, or use setters(each attribute has get and set method) to set them.**
 
@@ -184,7 +179,12 @@ mTagContainerLayout.removeAllTags();
 ## Change logs
 
 ## Sample App
-[APK](/sample/sample-release.apk)
+[APK](/storage/sample-release.apk)
+
+## Screenshots
+
+![smarttags1](storage/Screenshot_20160715-145326.png)
+![smarttags2](storage/Screenshot_20160715-145331.png)
 
 ## License
 
