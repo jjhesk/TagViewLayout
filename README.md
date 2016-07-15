@@ -79,9 +79,11 @@ Now, you have successfully created some TagViews. The following will show some m
 | tag_border_color | color | TagView border color(default #88F44336)
 | tag_background_color | color | TagView background color(default #33F44336)
 | tag_max_length | integer | The max length for TagView(default max length 23)
-| tag_clickable | boolean | Whether TagView can clickable(default unclickable)
 | tag_theme | enum | The TagView [theme](#themes)
 | tag_text_direction | enum | The TagView text [direction](#directions)
+| tag_drawable_state0 | drawable|  The drawable for the default state
+| tag_drawable_state1 | drawable | The drawable for the active state
+| tag_drawable_state2 | drawable |The drawable for the preselected / press state
 
 **You can set these attributes in layout file, or use setters(each attribute has get and set method) to set them.**
 
