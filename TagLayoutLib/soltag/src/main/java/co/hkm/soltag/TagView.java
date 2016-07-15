@@ -6,17 +6,13 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
-import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.ViewDragHelper;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.Date;
-
-import co.hkm.soltag.ext.LayouMode;
 
 /**
  * Author: lujun(http://blog.lujun.co)
@@ -146,19 +142,37 @@ public class TagView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRectF = new RectF();
         mOriginText = text == null ? "" : text;
-        flag_on = false;
+        flag_on = isViewClickable = false;
     }
 
     public void setNotification(TagContainerLayout ly) {
         mNotification = ly;
     }
 
-    public void setItemDrawable(Drawable d) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            setBackground(d);
+    private Drawable background_drawable_0, background_drawable_1, background_drawable_2;
+
+    /**
+     * setting of using drawable instead of using command attributes
+     *
+     * @param d0 this cannot be null if the drawable usage is active
+     * @param d1 this can be null
+     * @param d2 this can be null
+     */
+    public void setItemDrawableStates(@Nullable Drawable d0, @Nullable Drawable d1, @Nullable Drawable d2) {
+        background_drawable_0 = d0;
+        background_drawable_1 = d1;
+        background_drawable_2 = d2;
+        if (d0 != null) {
             useDrawable = true;
+            if (d1 == null) {
+                background_drawable_1 = d0;
+            }
+            if (d1 == null) {
+                background_drawable_2 = d0;
+            }
         }
     }
+
 
     private void onDealText() {
         if (!TextUtils.isEmpty(mOriginText)) {
@@ -196,7 +210,16 @@ public class TagView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        canvas.save();
         if (!useDrawable) {
+
+            // mPaint.setShadowLayer(12, 0, 0, Color.YELLOW);
+
+            // Important for certain APIs
+            // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            //    setLayerType(LAYER_TYPE_SOFTWARE, mPaint);
+            // }
+
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setColor(mBackgroundColor);
             canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
@@ -205,6 +228,17 @@ public class TagView extends View {
             mPaint.setStrokeWidth(mBorderWidth);
             mPaint.setColor(mBorderColor);
             canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
+        } else {
+
+            if (isFlag_on()) {
+                background_drawable_1.setBounds((int) mRectF.left, (int) mRectF.top, (int) mRectF.right, (int) mRectF.bottom);
+                background_drawable_1.draw(canvas);
+            } else {
+                background_drawable_0.setBounds((int) mRectF.left, (int) mRectF.top, (int) mRectF.right, (int) mRectF.bottom);
+                background_drawable_0.draw(canvas);
+            }
+
+            //  BitmapShader shader = new BitmapShader(bm, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         }
 
         mPaint.setStyle(Paint.Style.FILL);
@@ -218,9 +252,9 @@ public class TagView extends View {
                 canvas.drawText(sc, tmpX, getHeight() / 2 + fontH / 2 - bdDistance, mPaint);
             }
         } else {
-            canvas.drawText(mAbstractText, getWidth() / 2 - fontW / 2,
-                    getHeight() / 2 + fontH / 2 - bdDistance, mPaint);
+            canvas.drawText(mAbstractText, getWidth() / 2 - fontW / 2, getHeight() / 2 + fontH / 2 - bdDistance, mPaint);
         }
+        canvas.restore();
     }
 
     @Override
@@ -234,6 +268,7 @@ public class TagView extends View {
                     getParent().requestDisallowInterceptTouchEvent(true);
                     mLastY = y;
                     mLastX = x;
+                    isMoved = false;
                     break;
 
                 case MotionEvent.ACTION_MOVE:
@@ -296,7 +331,7 @@ public class TagView extends View {
             }
             return true;
         }
-        return super.onTouchEvent(event);
+        return true;
     }
 
     public String getText() {
@@ -316,8 +351,11 @@ public class TagView extends View {
         return (int) getTag();
     }
 
-    public void setOnTagClickListener(OnTagClickListener listener) {
+    public void setOnTagClickListener(@Nullable OnTagClickListener listener) {
         this.mOnTagClickListener = listener;
+        if (listener != null) {
+            this.isViewClickable = true;
+        }
     }
 
     public void setTagBackgroundColor(int color) {
@@ -351,7 +389,7 @@ public class TagView extends View {
 
     public void setFlag_on(boolean b) {
         if (useDrawable) {
-            setSelected(b);
+            //setSelected(b);
         }
         this.flag_on = b;
     }
@@ -373,10 +411,6 @@ public class TagView extends View {
 
     public void setVerticalPadding(int padding) {
         this.mVerticalPadding = padding;
-    }
-
-    public void setIsViewClickable(boolean clickable) {
-        this.isViewClickable = clickable;
     }
 
     public interface OnTagClickListener {

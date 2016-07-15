@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import co.hkm.soltag.ext.LayouMode;
-
 /**
  * Author: lujun(http://blog.lujun.co)
  * Date: 2015-12-30 17:14
@@ -131,11 +129,11 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * Whether TagView can clickable(default unclickable)
      */
-    private boolean isTagViewClickable;
+    // private boolean isTagViewClickable;
     /**
      * for alternative selecting drawable
      */
-    private Drawable itemDrawable;
+    private Drawable itemDrawable0, itemDrawable1, itemDrawable2;
     /**
      * Preselected positions of the tag
      */
@@ -251,12 +249,10 @@ public class TagContainerLayout extends ViewGroup {
                 mTagBackgroundColor);
         mTagTextColor = attributes.getColor(R.styleable.AndroidTagView_tag_text_color, mTagTextColor);
         mTagTextDirection = attributes.getInt(R.styleable.AndroidTagView_tag_text_direction, mTagTextDirection);
-        isTagViewClickable = attributes.getBoolean(R.styleable.AndroidTagView_tag_clickable, false);
-        Drawable dr = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable);
-        if (dr != null) {
-            //Drawable l = ContextCompat.getDrawable(mConx, dr);
-            itemDrawable = dr;
-        }
+        //isTagViewClickable = attributes.getBoolean(R.styleable.AndroidTagView_tag_clickable, false);
+        itemDrawable0 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state0);
+        itemDrawable1 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state1);
+        itemDrawable2 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state2);
         String font_name = attributes.getString(R.styleable.AndroidTagView_tag_fontface);
         mTagTypeface = helper.getTypface(font_name, context);
         attributes.recycle();
@@ -409,7 +405,14 @@ public class TagContainerLayout extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return mViewDragHelper.shouldInterceptTouchEvent(ev);
+        // TODO Auto-generated method stub
+        try {
+            return mViewDragHelper.shouldInterceptTouchEvent(ev);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -537,14 +540,11 @@ public class TagContainerLayout extends ViewGroup {
         tagView.setTextSize(mTagTextSize);
         tagView.setHorizontalPadding(mTagHorizontalPadding);
         tagView.setVerticalPadding(mTagVerticalPadding);
-        tagView.setIsViewClickable(isTagViewClickable);
         tagView.setBdDistance(mTagBdDistance);
         tagView.setOnTagClickListener(mOnTagClickListener);
         tagView.setMode(mMode);
         tagView.setNotification(this);
-        if (itemDrawable != null) {
-            tagView.setItemDrawable(itemDrawable);
-        }
+        tagView.setItemDrawableStates(itemDrawable0, itemDrawable1, itemDrawable2);
     }
 
     private void processPreselectedOptionsOff(final int position, TagView tag) {
@@ -1087,9 +1087,9 @@ public class TagContainerLayout extends ViewGroup {
             if (mChildViews.get(i) instanceof TagView) {
                 TagView d = (TagView) mChildViews.get(i);
                 d.setMode(mode);
-                if (mode == LayouMode.SINGLE_CHOICE || mode == LayouMode.MULTIPLE_CHOICE) {
+               /* if (mode == LayouMode.SINGLE_CHOICE || mode == LayouMode.MULTIPLE_CHOICE) {
                     d.setIsViewClickable(true);
-                }
+                }*/
             }
         }
         return this;
@@ -1148,20 +1148,20 @@ public class TagContainerLayout extends ViewGroup {
      * Get TagView is clickable.
      *
      * @return as it is
-     */
-    public boolean getIsTagViewClickable() {
-        return isTagViewClickable;
-    }
 
+    public boolean getIsTagViewClickable() {
+    return isTagViewClickable;
+    }
+     */
     /**
      * Set TagView is clickable
      *
      * @param clickable as it is
-     */
-    public void setIsTagViewClickable(boolean clickable) {
-        this.isTagViewClickable = clickable;
-    }
 
+    public void setIsTagViewClickable(boolean clickable) {
+    this.isTagViewClickable = clickable;
+    }
+     */
     /**
      * Get TagView border width.
      *

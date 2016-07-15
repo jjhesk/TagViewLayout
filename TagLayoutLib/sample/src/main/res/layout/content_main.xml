@@ -31,7 +31,6 @@
                 android:padding="10dp"
                 app:container_enable_drag="true"
                 app:horizontal_interval="10dp"
-                app:tag_clickable="true"
                 app:tag_theme="pure_teal"
                 app:vertical_interval="10dp" />
 
@@ -66,7 +65,7 @@
                 app:container_border_width="4dp"
                 app:container_enable_drag="true"
                 app:horizontal_interval="10dp"
-                app:tag_clickable="false"
+
                 app:tag_theme="random"
                 app:vertical_interval="10dp" />
 
@@ -85,7 +84,7 @@
                 app:tag_background_color="#00000000"
                 app:tag_border_color="#330000ff"
                 app:tag_border_width="1dp"
-                app:tag_clickable="false"
+
                 app:tag_corner_radius="1dp"
                 app:tag_horizontal_padding="15dp"
                 app:tag_max_length="18"
@@ -110,7 +109,7 @@
                 app:tag_background_color="#00000000"
                 app:tag_border_color="#330000ff"
                 app:tag_border_width="1dp"
-                app:tag_clickable="true"
+
                 app:tag_corner_radius="1dp"
                 app:tag_horizontal_padding="@dimen/fat_margin"
                 app:tag_max_length="18"
@@ -133,7 +132,7 @@
                 app:tag_background_color="#00000000"
                 app:tag_border_color="#330000ff"
                 app:tag_border_width="1dp"
-                app:tag_clickable="true"
+
                 app:tag_corner_radius="1dp"
                 app:tag_horizontal_padding="@dimen/mid_margin"
                 app:tag_max_length="18"
@@ -156,7 +155,7 @@
                 app:tag_background_color="#00000000"
                 app:tag_border_color="#330000ff"
                 app:tag_border_width="1dp"
-                app:tag_clickable="true"
+
                 app:tag_corner_radius="1dp"
                 app:tag_horizontal_padding="@dimen/mid_margin"
                 app:tag_max_length="18"
@@ -179,7 +178,7 @@
                 app:tag_background_color="#00000000"
                 app:tag_border_color="#330000ff"
                 app:tag_border_width="1dp"
-                app:tag_clickable="true"
+
                 app:tag_corner_radius="1dp"
                 app:tag_horizontal_padding="@dimen/mid_margin"
                 app:tag_max_length="18"
@@ -199,8 +198,10 @@
                 app:container_border_radius="0dp"
                 app:container_gravity="left"
                 app:horizontal_interval="10dp"
-                app:tag_clickable="true"
-                app:tag_drawable="@drawable/combo_button_sal"
+
+                app:tag_drawable_state0="@drawable/button_unsel"
+                app:tag_drawable_state1="@drawable/button_sel"
+                app:tag_drawable_state2="@drawable/button_sel"
                 app:tag_horizontal_padding="@dimen/mid_margin"
                 app:tag_max_length="15"
                 app:tag_text_direction="rtl"

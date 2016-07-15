@@ -1,4 +1,4 @@
-package co.hkm.soltag.ext;
+package co.hkm.soltag;
 
 /**
  * Created by hesk on 29/1/16.
