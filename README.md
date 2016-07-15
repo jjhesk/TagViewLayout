@@ -24,7 +24,7 @@ Add below dependency in your **build.gradle** file.
 
 ```gradle
 dependencies {
-    compile 'com.hkm.taglib:tag:1.2.0'
+    compile 'com.hkm.taglib:tag:1.6.0'
 }
 ```
 
