@@ -41,7 +41,6 @@ Use the AndroidTagView in layout file, you can add customized attributes here.
     app:container_enable_drag="false"
     app:horizontal_interval="10dp"
     app:vertical_interval="10dp"
-    app:tag_clickable="true"
     app:tag_theme="pure_teal" />
 ```
 
