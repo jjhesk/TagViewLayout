@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         final TagContainerLayout cont = SampleCollections.SPEAICAL_DRAWABLE_SELECTION_ITEM
                 .render(this)
-                .setMode(LayouMode.MULTIPLE_CHOICE)
+                .setMode(LayouMode.SINGLE_CHOICE_OVERLAY_PRESET)
                 .define(this);
 
         cont.setTags(Util.toTag(Util.getListLanguages()));

@@ -30,6 +30,9 @@
         <attr name="tag_drawable_state0" format="reference" />
         <attr name="tag_drawable_state1" format="reference" />
         <attr name="tag_drawable_state2" format="reference" />
+        <attr name="tag_drawable_state3" format="reference" />
+        <attr name="tag_drawable_state4" format="reference" />
+        <attr name="tag_drawable_state5" format="reference" />
         <attr name="tag_fontface" format="string" />
         <attr name="tag_theme" format="enum">
             <enum name="none" value="-1" />

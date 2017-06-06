@@ -133,7 +133,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * for alternative selecting drawable
      */
-    private Drawable itemDrawable0, itemDrawable1, itemDrawable2;
+    private Drawable itemDrawable0, itemDrawable1, itemDrawable2, itemDrawable3, itemDrawable4, itemDrawable5;
     /**
      * Preselected positions of the tag
      */
@@ -176,12 +176,15 @@ public class TagContainerLayout extends ViewGroup {
     private List<View> mChildViews;
 
     private int[] mViewPos;
-    private int[] profile_normal, profile_active, mThemeOnPreselected;
+    private int[] profile_normal, profile_active, profile_theme_perpetual_preset, profile_theme_preset_perpetual_active;
     private Context mConx;
     /**
      * View theme default PURE_CYAN)
      */
     private int mTheme = ColorFactory.PURE_CYAN;
+
+    private int mThemePresetPerpetual = ColorFactory.PURE_CYAN;
+    private int mThemePresetPerpetualActive = ColorFactory.RANDOM;
     /**
      * View theme default PURE_CYAN
      */
@@ -195,6 +198,8 @@ public class TagContainerLayout extends ViewGroup {
      * Default tag min length
      */
     private static final int TAG_MIN_LENGTH = 3;
+
+    private boolean has_hard_layout_preset = false;
 
     public TagContainerLayout(Context context) {
         this(context, null);
@@ -253,10 +258,12 @@ public class TagContainerLayout extends ViewGroup {
         itemDrawable0 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state0);
         itemDrawable1 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state1);
         itemDrawable2 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state2);
+        itemDrawable3 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state3);
+        itemDrawable4 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state4);
+        itemDrawable5 = attributes.getDrawable(R.styleable.AndroidTagView_tag_drawable_state5);
         String font_name = attributes.getString(R.styleable.AndroidTagView_tag_fontface);
         mTagTypeface = helper.getTypface(font_name, context);
         attributes.recycle();
-
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRectF = new RectF();
         mChildViews = new ArrayList<View>();
@@ -478,11 +485,11 @@ public class TagContainerLayout extends ViewGroup {
     private void processPreselectedOptions(int position, TagView tag, int[] target_theme, boolean flag) {
         if (mMode == LayouMode.MULTIPLE_CHOICE || mMode == LayouMode.SINGLE_CHOICE) {
             boolean apply_original = true;
-            if (mPreselectedTags != null && mThemeOnPreselected != null) {
+            if (mPreselectedTags != null && profile_theme_perpetual_preset != null) {
                 for (int i = 0; i < mPreselectedTags.length; i++) {
                     if (mPreselectedTags[i] == position) {
                         if (flag) {
-                            tag.applyProfile(mThemeOnPreselected);
+                            tag.applyProfile(profile_theme_perpetual_preset);
                         } else {
                             tag.applyProfile(target_theme);
                         }
@@ -503,8 +510,13 @@ public class TagContainerLayout extends ViewGroup {
             if (mPreselectedTags == null) return;
             for (int i = 0; i < mPreselectedTags.length; i++) {
                 if (mPreselectedTags[i] == position) {
+                    if (has_hard_layout_preset) {
+                        tag.setPresetFlag(true);
+                        tag.applyProfile(profile_theme_perpetual_preset);
+                    } else {
+                        tag.applyProfile(profile_active);
+                    }
                     tag.setFlag_on(true);
-                    tag.applyProfile(mThemeOnPreselected == null ? profile_active : mThemeOnPreselected);
                 }
             }
         }
@@ -545,13 +557,14 @@ public class TagContainerLayout extends ViewGroup {
         tagView.setMode(mMode);
         tagView.setNotification(this);
         tagView.setItemDrawableStates(itemDrawable0, itemDrawable1, itemDrawable2);
+        tagView.setItemDrawableHardStates(itemDrawable3, itemDrawable4, itemDrawable5);
     }
 
     private void processPreselectedOptionsOff(final int position, TagView tag) {
         if (mPreselectedTags == null) return;
         for (int i = 0; i < mPreselectedTags.length; i++) {
             if (mPreselectedTags[i] == position) {
-                tag.applyProfile(mThemeOnPreselected == null ? profile_normal : mThemeOnPreselected);
+                tag.applyProfile(profile_theme_perpetual_preset == null ? profile_normal : profile_theme_perpetual_preset);
             } else {
                 tag.applyProfile(profile_normal);
             }
@@ -573,12 +586,19 @@ public class TagContainerLayout extends ViewGroup {
                 if (mChildViews.get(i) instanceof TagView) {
                     TagView tag = (TagView) mChildViews.get(i);
                     if (onNotePosition == i) {
-                        tag.applyProfile(profile_active);
+                        if (has_hard_layout_preset && tag.isPrestFlag_on()) {
+                            tag.applyProfile(profile_theme_preset_perpetual_active);
+                        } else {
+                            tag.applyProfile(profile_active);
+                        }
                         tag.setFlag_on(true);
                     } else {
+                        if (has_hard_layout_preset && tag.isPrestFlag_on()) {
+                            tag.applyProfile(profile_theme_perpetual_preset);
+                        } else {
+                            tag.applyProfile(profile_normal);
+                        }
                         tag.setFlag_on(false);
-                        tag.applyProfile(profile_normal);
-                        // processPreselectedOptionsOff(i, tag);
                     }
                     tag.postInvalidate();
                 }
@@ -588,7 +608,7 @@ public class TagContainerLayout extends ViewGroup {
                 if (mChildViews.get(i) instanceof TagView) {
                     TagView tag = (TagView) mChildViews.get(i);
                     if (onNotePosition == i) {
-                        tag.applyProfile(profile_active);
+                        tag.applyProfile(profile_theme_preset_perpetual_active);
                         tag.setFlag_on(true);
                     } else {
                         processPreselectedOptionsOff(i, tag);
@@ -603,9 +623,6 @@ public class TagContainerLayout extends ViewGroup {
                     // setProfile(tag, profile_normal);
                     processPreselectedOptions(notepos, tag, profile_normal, false);
                 } else {
-                    // tag.setFlag_on(true);
-                    //   ..   processPreselectedOptions(notepos, tag, profile_active);
-                    //  setProfile(tag, profile_active);
                     processPreselectedOptions(notepos, tag, profile_active, true);
                 }
                 tag.postInvalidate();
@@ -1100,16 +1117,39 @@ public class TagContainerLayout extends ViewGroup {
         return this;
     }
 
+    /**
+     * A helper function that will able to set a single choice of the layout with the preset items as well as making up the preset items theme
+     *
+     * @param list                collection of positions
+     * @param theme_on_reselected the theme pointer for the xml theme configurations
+     * @return the module tag container
+     */
     public final TagContainerLayout setPreselectedTags(int[] list, int theme_on_reselected) {
         mPreselectedTags = list;
-        mThemeOnPreselected = onUpdateColorFactory(theme_on_reselected);
+        profile_theme_perpetual_preset = onUpdateColorFactory(theme_on_reselected);
+        return this;
+    }
+
+    /**
+     * given the SINGLE_CHOICE_OVERLAY_PRESET as foundation with all other theme configurations
+     *
+     * @param list                the preset item list
+     * @param theme_hard_inactive the theme with inactive preset items
+     * @param theme_hard_active   the theme with active preset items
+     * @return the module tag container
+     */
+    public final TagContainerLayout setPresetHardTags(int[] list, int theme_hard_inactive, int theme_hard_active) {
+        mPreselectedTags = list;
+        profile_theme_perpetual_preset = onUpdateColorFactory(theme_hard_inactive);
+        profile_theme_preset_perpetual_active = onUpdateColorFactory(theme_hard_active);
+        has_hard_layout_preset = true;
         return this;
     }
 
     /**
      * Get TagView max length.
      *
-     * @return as it is
+     * @return the max length of the characters on a single line
      */
     public int getTagMaxLength() {
         return mTagMaxLength;
@@ -1133,6 +1173,16 @@ public class TagContainerLayout extends ViewGroup {
     public void setTheme(int theme) {
         mTheme = theme;
         profile_normal = onUpdateColorFactory(theme);
+    }
+
+    public void setPresetPerpetualTheme(int theme) {
+        mThemePresetPerpetual = theme;
+        profile_theme_perpetual_preset = onUpdateColorFactory(theme);
+    }
+
+    public void setThemePresetPerpetualActive(int theme) {
+        mThemePresetPerpetualActive = theme;
+        profile_theme_preset_perpetual_active = onUpdateColorFactory(theme);
     }
 
     /**

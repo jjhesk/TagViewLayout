@@ -19,7 +19,7 @@ import co.hkm.soltag.LayouMode;
  * Created by hesk on 1/2/16.
  */
 public enum SampleCollections {
-
+    //#101
     ROUND_CORNER(R.id.tagcontainerLayout1) {
         @Override
         protected TagContainerLayout define(final Activity activity) {
@@ -68,19 +68,28 @@ public enum SampleCollections {
 
             return container;
         }
-    }, COUNTRY_LIST(R.id.tagcontainerLayout2) {
+    },
+
+    //#102
+    COUNTRY_LIST(R.id.tagcontainerLayout2) {
         @Override
         protected TagContainerLayout define(final Activity act) {
             container.setTagTypeface("iran_sans.ttf");
             return container;
         }
-    }, SPECIAL_TEXT(R.id.tagcontainerLayout3) {
+    },
+
+    //#103
+    SPECIAL_TEXT(R.id.tagcontainerLayout3) {
         @Override
         protected TagContainerLayout define(final Activity act) {
             container.setMode(setupModeCode);
             return container;
         }
-    }, HBX_STYLE(R.id.tagcontainerLayout5) {
+    },
+
+    //#104
+    HBX_STYLE(R.id.tagcontainerLayout5) {
         @Override
         protected TagContainerLayout define(final Activity act) {
             container.setThemeOnActive(R.style.tagactive);
@@ -119,7 +128,7 @@ public enum SampleCollections {
         }
 
     },
-
+    //#105
     MULTIPLE_CHOICE_SAMPLE(R.id.tagcontainerLayout4) {
         @Override
         protected TagContainerLayout define(final Activity act) {
@@ -162,15 +171,15 @@ public enum SampleCollections {
             return container;
         }
     },
-
+    //#106
     PRESELECTED(R.id.preseleced_tag_container) {
         @Override
         protected TagContainerLayout define(final Activity act) {
             container.setThemeOnActive(R.style.tagactive_big);
             container.setTheme(R.style.tagnormal_big);
-            container.setPreselectedTags(new int[]{
+            container.setPresetHardTags(new int[]{
                     1, 3, 5, 7
-            }, R.style.tagnormal_preactive);
+            }, R.style.hard_normal, R.style.hard_active);
             container.setMode(setupModeCode);
             container.setOnTagClickListener(new TagView.OnTagClickListener() {
                 @Override
@@ -204,7 +213,7 @@ public enum SampleCollections {
             return container;
         }
     },
-
+    //#107
     MUTLIPLE_SELECTION_X_PRESELECTION(R.id.pre_x_multi_interact) {
         @Override
         protected TagContainerLayout define(final Activity act) {
@@ -245,22 +254,21 @@ public enum SampleCollections {
 
             return container;
         }
-    } ,
-
-    SPEAICAL_DRAWABLE_SELECTION_ITEM(R.id.drawble_selection){
+    },
+    //#108
+    SPEAICAL_DRAWABLE_SELECTION_ITEM(R.id.drawble_selection) {
         @Override
         protected TagContainerLayout define(final Activity act) {
             container.setThemeOnActive(R.style.tagactive_big);
             container.setTheme(R.style.tagnormal_big);
-
-            container.setPreselectedTags(new int[]{
-                    1, 3, 5, 7
-            }, R.style.tagnormal_preactive);
-            container.setMode(setupModeCode);
+            container.setMode(LayouMode.SINGLE_CHOICE);
+            container.setPresetHardTags(new int[]{
+                    1, 3
+            }, R.style.hard_normal, R.style.hard_active);
             container.setOnTagClickListener(new TagView.OnTagClickListener() {
                 @Override
                 public void onTagClick(int position, String text) {
-                   // Toast.makeText(act, "click-position:" + position + ", text:" + text,
+                    // Toast.makeText(act, "click-position:" + position + ", text:" + text,
                     //        Toast.LENGTH_SHORT).show();
                 }
 
@@ -289,9 +297,7 @@ public enum SampleCollections {
             return container;
         }
 
-    }
-
-    ;
+    };
 
     private int layoutid;
     protected TagContainerLayout container;

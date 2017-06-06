@@ -118,7 +118,7 @@ public class TagView extends View {
     private TagContainerLayout mNotification;
 
     private boolean useDrawable = false;
-    private boolean flag_on;
+    private boolean flag_on, preset_flag_on;
 
     private Runnable mLongClickHandle = new Runnable() {
         @Override
@@ -142,14 +142,20 @@ public class TagView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRectF = new RectF();
         mOriginText = text == null ? "" : text;
-        flag_on = isViewClickable = false;
+        preset_flag_on = flag_on = isViewClickable = false;
     }
 
     public void setNotification(TagContainerLayout ly) {
         mNotification = ly;
     }
 
-    private Drawable background_drawable_0, background_drawable_1, background_drawable_2;
+    private Drawable
+            background_drawable_0,
+            background_drawable_1,
+            background_drawable_2,
+            background_drawable_3,
+            background_drawable_4,
+            background_drawable_5;
 
     /**
      * setting of using drawable instead of using command attributes
@@ -173,6 +179,20 @@ public class TagView extends View {
         }
     }
 
+    public void setItemDrawableHardStates(@Nullable Drawable d0, @Nullable Drawable d1, @Nullable Drawable d2) {
+        background_drawable_3 = d0;
+        background_drawable_4 = d1;
+        background_drawable_5 = d2;
+        if (d0 != null) {
+            useDrawable = true;
+            if (d1 == null) {
+                background_drawable_3 = d0;
+            }
+            if (d1 == null) {
+                background_drawable_4 = d0;
+            }
+        }
+    }
 
     private void onDealText() {
         if (!TextUtils.isEmpty(mOriginText)) {
@@ -208,6 +228,11 @@ public class TagView extends View {
         mRectF.set(mBorderWidth, mBorderWidth, w - mBorderWidth, h - mBorderWidth);
     }
 
+    private void setDrawableBound(Drawable d, Canvas c, RectF rec) {
+        d.setBounds((int) rec.left, (int) rec.top, (int) rec.right, (int) rec.bottom);
+        d.draw(c);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.save();
@@ -229,13 +254,18 @@ public class TagView extends View {
             mPaint.setColor(mBorderColor);
             canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
         } else {
-
             if (isFlag_on()) {
-                background_drawable_1.setBounds((int) mRectF.left, (int) mRectF.top, (int) mRectF.right, (int) mRectF.bottom);
-                background_drawable_1.draw(canvas);
+                if (isPrestFlag_on()) {
+                    setDrawableBound(background_drawable_4, canvas, mRectF);
+                } else {
+                    setDrawableBound(background_drawable_1, canvas, mRectF);
+                }
             } else {
-                background_drawable_0.setBounds((int) mRectF.left, (int) mRectF.top, (int) mRectF.right, (int) mRectF.bottom);
-                background_drawable_0.draw(canvas);
+                if (isPrestFlag_on()) {
+                    setDrawableBound(background_drawable_3, canvas, mRectF);
+                } else {
+                    setDrawableBound(background_drawable_0, canvas, mRectF);
+                }
             }
 
             //  BitmapShader shader = new BitmapShader(bm, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
@@ -383,16 +413,6 @@ public class TagView extends View {
         onDealText();
     }
 
-    public boolean isFlag_on() {
-        return flag_on;
-    }
-
-    public void setFlag_on(boolean b) {
-        if (useDrawable) {
-            //setSelected(b);
-        }
-        this.flag_on = b;
-    }
 
     public void applyProfile(int[] profile) {
         setTagTextColor(profile[2]);
@@ -434,5 +454,25 @@ public class TagView extends View {
 
     public void setBdDistance(float bdDistance) {
         this.bdDistance = bdDistance;
+    }
+
+
+    public boolean isFlag_on() {
+        return flag_on;
+    }
+
+    public boolean isPrestFlag_on() {
+        return preset_flag_on;
+    }
+
+    public void setFlag_on(boolean b) {
+        if (useDrawable) {
+            //setSelected(b);
+        }
+        this.flag_on = b;
+    }
+
+    public void setPresetFlag(boolean b) {
+        this.preset_flag_on = b;
     }
 }

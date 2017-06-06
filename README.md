@@ -5,7 +5,6 @@
 An Android TagView library. You can customize awesome TagView by using this library.
 
 ## Demo
-
 [preset layout configurations in examples](https://github.com/jjhesk/TagViewLayout/blob/master/TagLayoutLib/sample/src/main/res/layout/content_main.xml)
 
 [Video Demo](https://youtu.be/VHzBJvD-hjU)
@@ -15,6 +14,8 @@ An Android TagView library. You can customize awesome TagView by using this libr
 - [x] single selection choice mode
 - [x] toggle and switching color by xml style configurations
 - [x] styling via code base / xml base
+- [x] support using drawables as button face
+- [x] support hard preset items
 
 ## Usage
 
@@ -24,7 +25,7 @@ Add below dependency in your **build.gradle** file.
 
 ```gradle
 dependencies {
-    compile 'com.hkm.taglib:tag:1.6.0'
+    compile 'com.hkm.taglib:tag:1.7.1'
 }
 ```
 
@@ -83,6 +84,9 @@ Now, you have successfully created some TagViews. The following will show some m
 | tag_drawable_state0 | drawable|  The drawable for the default state
 | tag_drawable_state1 | drawable | The drawable for the active state
 | tag_drawable_state2 | drawable |The drawable for the preselected / press state
+| tag_drawable_state3 | drawable |The drawable for the preselected / press state - hard preset
+| tag_drawable_state4 | drawable |The drawable for the preselected / press state - hard preset
+| tag_drawable_state5 | drawable |The drawable for the preselected / press state - hard preset
 
 **You can set these attributes in layout file, or use setters(each attribute has get and set method) to set them.**
 
@@ -196,7 +200,7 @@ mTagContainerLayout.removeAllTags();
 
 ## License
 
-    Copyright 2015 hkm jet fighter-101
+    Copyright 2015-2017 HKM United
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

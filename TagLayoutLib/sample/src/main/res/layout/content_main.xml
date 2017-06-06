@@ -22,6 +22,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#101 Movable" />
 
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/tagcontainerLayout1"
@@ -44,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:singleLine="true" />
+                    android:lines="1" />
 
                 <Button
                     android:id="@+id/btn_add_tag"
@@ -53,6 +57,12 @@
                     android:layout_weight="1"
                     android:text="add tag" />
             </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#102 Color manipulation" />
 
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/tagcontainerLayout2"
@@ -69,6 +79,11 @@
                 app:tag_theme="random"
                 app:vertical_interval="10dp" />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#103 Text Alignment" />
 
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/tagcontainerLayout3"
@@ -95,6 +110,13 @@
                 app:tag_vertical_padding="10dp"
                 app:vertical_interval="10dp" />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#104 Preset Multiple Choices" />
+
+
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/tagcontainerLayout4"
                 android:layout_width="match_parent"
@@ -118,6 +140,10 @@
                 app:tag_vertical_padding="@dimen/fat_margin"
                 app:vertical_interval="10dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#105 Box size layout single choice" />
 
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/tagcontainerLayout5"
@@ -141,6 +167,10 @@
                 app:tag_vertical_padding="@dimen/mid_margin"
                 app:vertical_interval="10dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#106 single choice - hard preset" />
 
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/preseleced_tag_container"
@@ -164,6 +194,10 @@
                 app:tag_vertical_padding="@dimen/mid_margin"
                 app:vertical_interval="10dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#107 Multi choice lock down" />
 
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/pre_x_multi_interact"
@@ -187,6 +221,10 @@
                 app:tag_vertical_padding="@dimen/mid_margin"
                 app:vertical_interval="10dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#108 Multi choice preset layout with drawables" />
 
             <co.hkm.soltag.TagContainerLayout
                 android:id="@+id/drawble_selection"
@@ -202,6 +240,9 @@
                 app:tag_drawable_state0="@drawable/button_unsel"
                 app:tag_drawable_state1="@drawable/button_sel"
                 app:tag_drawable_state2="@drawable/button_sel"
+                app:tag_drawable_state3="@drawable/b_h_01"
+                app:tag_drawable_state4="@drawable/b_h_02"
+                app:tag_drawable_state5="@drawable/b_h_02"
                 app:tag_horizontal_padding="@dimen/mid_margin"
                 app:tag_max_length="15"
                 app:tag_text_direction="rtl"
