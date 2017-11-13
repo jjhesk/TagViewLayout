@@ -21,9 +21,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':soltag')
-    testCompile 'junit:junit:4.12'
-    compile supportDependencies.appCompat
-    compile supportDependencies.design
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':soltag')
+    //testimplementation 'junit:junit:4.12'
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.design
 }
