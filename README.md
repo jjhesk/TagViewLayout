@@ -198,6 +198,10 @@ mTagContainerLayout.removeAllTags();
 ##Screenshots
 ![IMEF](http://i.giphy.com/2Yk9ek8Qafgl2.gif)
 
+
+### Thank you for your support and we will bring more amazing libraries to your productive works. We are accepting bitcoin by the address as below. Please scan the QR code to start
+![wallet](http://s32.postimg.org/sdd1oio1t/qrwallet.jpg)
+
 ## License
 
     Copyright 2015-2017 HKM United
